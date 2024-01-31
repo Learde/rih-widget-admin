@@ -42,5 +42,6 @@ const router = useRouter();
     position: relative;
     display: flex;
     justify-content: center;
+    margin-bottom: 55px;
 }
 </style>
