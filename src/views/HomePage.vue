@@ -1,6 +1,7 @@
 <script setup>
+import { IconCategory, IconChevron, IconInventory, IconPrice, IconSettings } from "@/icones";
+
 import { RouterLink } from "vue-router";
-import { IconSettings, IconInventory, IconPrice, IconCategory, IconChevron } from "@/icones";
 </script>
 
 <template>
@@ -28,9 +29,9 @@ import { IconSettings, IconInventory, IconPrice, IconCategory, IconChevron } fro
 .main {
     display: flex;
     flex-direction: column;
+    gap: 5px;
     align-items: center;
     height: 100%;
-    gap: 4px;
 }
 
 .link,
@@ -40,14 +41,14 @@ import { IconSettings, IconInventory, IconPrice, IconCategory, IconChevron } fro
 }
 
 .link {
+    display: flex;
+    gap: 10px;
+    align-items: center;
     width: 100%;
     max-width: 400px;
-    display: flex;
-    align-items: center;
+    padding: 10px 0;
+    font-size: 16px;
     color: var(--c-text);
-    font-size: 18px;
-    gap: 10px;
-    padding: 8px 0;
 
     &:hover,
     &:hover * {
@@ -57,12 +58,15 @@ import { IconSettings, IconInventory, IconPrice, IconCategory, IconChevron } fro
 
 .chevron {
     margin-left: auto;
+    font-size: 14px;
     color: var(--c-gray-1);
 }
 
 .icon-wrapper {
-    width: 20px;
+    position: relative;
+    top: 1px;
     display: flex;
     align-items: center;
+    width: 20px;
 }
 </style>
