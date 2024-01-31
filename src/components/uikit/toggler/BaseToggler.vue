@@ -29,9 +29,11 @@ const getActiveMeta = () => {
 };
 
 const translateActive = computed(() => {
-    const activeOrder = getActiveMeta().order;
+    const activeMeta = getActiveMeta();
 
-    return `translateX(${(activeOrder - 1) * 100}%) translateY(-50%)`;
+    if (!activeMeta) return "";
+
+    return `translateX(${(activeMeta.order - 1) * 100}%) translateY(-50%)`;
 });
 const activeWidth = computed(() => {
     return `calc(${100 / Object.keys(props.meta).length}% - 2px)`;
@@ -103,9 +105,9 @@ onMounted(() => {
     background-color: #fff;
     border: 0.5px solid rgb(0 0 0 / 8%);
     border-radius: 8px;
-    transition: all 0.4s;
     box-shadow:
         0 3px 1px 0 rgb(0 0 0 / 4%),
         0 3px 8px 0 rgb(0 0 0 / 12%);
+    transition: all 0.4s;
 }
 </style>
