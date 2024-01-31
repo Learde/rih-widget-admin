@@ -11,6 +11,9 @@ const router = createRouter({
         {
             path: "/settings",
             name: "Settings",
+            meta: {
+                title: "Настройки",
+            },
             component: () => import("@/views/SettingsPage.vue"),
         },
     ],
