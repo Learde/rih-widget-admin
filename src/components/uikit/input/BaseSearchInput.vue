@@ -20,6 +20,7 @@ import { IconSearch } from "@/icones";
     background-color: var(--c-gray-6);
     border: none;
     border-radius: 10px;
+    outline: none;
 
     &::placeholder {
         font-weight: 500;
