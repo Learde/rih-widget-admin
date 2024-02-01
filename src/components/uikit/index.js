@@ -4,3 +4,4 @@ export { default as BaseToggler } from "./toggler/BaseToggler.vue";
 export { default as BaseSelectMenu } from "./select/BaseSelectMenu.vue";
 export { default as BaseSquareInput } from "./input/BaseSquareInput.vue";
 export { default as BaseFormGroup } from "./form-group/BaseFormGroup.vue";
+export { default as BaseColorPicker } from "./colors/BaseColorPicker.vue";

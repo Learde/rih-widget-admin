@@ -1,5 +1,6 @@
 <script setup>
 import {
+    BaseColorPicker,
     BaseFormGroup,
     BaseSelectMenu,
     BaseSquareInput,
@@ -37,6 +38,8 @@ const FILTER_CATEGORY_META = {
 const settings = ref({
     filtersPosition: null,
     filterCategory: null,
+    primaryColor: "#2e55b9",
+    backgroundColor: "#fafafa"
 });
 </script>
 
@@ -167,6 +170,14 @@ const settings = ref({
             </div>
             <hr />
             <h3>Цвета</h3>
+            <div class="submenu">
+                <BaseColorPicker v-model="settings.primaryColor">
+                    <template #label>Акцентный цвет</template>
+                </BaseColorPicker>
+                <BaseColorPicker v-model="settings.backgroundColor">
+                    <template #label>Фоновый цвет</template>
+                </BaseColorPicker>
+            </div>
         </div>
     </div>
 </template>
