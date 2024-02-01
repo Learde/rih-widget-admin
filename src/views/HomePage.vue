@@ -1,5 +1,12 @@
 <script setup>
-import { IconCategory, IconChevron, IconInventory, IconPrice, IconSettings } from "@/icones";
+import {
+    IconCategory,
+    IconChevron,
+    IconInventory,
+    IconPrice,
+    IconRIHLogo,
+    IconSettings,
+} from "@/icones";
 
 import { RouterLink } from "vue-router";
 </script>
@@ -7,21 +14,25 @@ import { RouterLink } from "vue-router";
 <template>
     <main class="main">
         <RouterLink class="link" :to="{ name: 'Settings' }">
-            <div class="icon-wrapper"><IconSettings class="icon" /></div>
-            Настройки <IconChevron class="chevron" />
+            <div class="icon-wrapper"><IconInventory class="icon" /></div>
+            <span>Склад инвентаря</span> <IconChevron class="chevron" />
         </RouterLink>
         <RouterLink class="link" :to="{ name: 'Settings' }">
-            <div class="icon-wrapper"><IconInventory class="icon" /></div>
-            Инвентарь <IconChevron class="chevron" />
+            <div class="icon-wrapper"><IconSettings class="icon" /></div>
+            <span>Настройка витрины</span> <IconChevron class="chevron" />
         </RouterLink>
         <RouterLink class="link" :to="{ name: 'Settings' }">
             <div class="icon-wrapper"><IconPrice class="icon" /></div>
-            Тарифы <IconChevron class="chevron" />
+            <span>Настройка тарифов</span> <IconChevron class="chevron" />
         </RouterLink>
         <RouterLink class="link" :to="{ name: 'Settings' }">
             <div class="icon-wrapper"><IconCategory class="icon" /></div>
-            Категории <IconChevron class="chevron" />
+            <span>Редактор категорий инвентаря</span> <IconChevron class="chevron" />
         </RouterLink>
+        <a class="link" href="https://lk.rentinhand.ru">
+            <div class="icon-wrapper"><IconRIHLogo class="icon" /></div>
+            <span>Личный кабинет Rent in Hand</span> <IconChevron class="chevron" />
+        </a>
     </main>
 </template>
 
@@ -63,14 +74,15 @@ import { RouterLink } from "vue-router";
 }
 
 .icon-wrapper {
-    position: relative;
-    top: 1px;
+    // position: relative;
+    // top: 1px;
     display: flex;
     align-items: center;
     width: 20px;
 }
 
 .icon {
-    color: var(--c-primary);
+    // color: var(--c-primary);
+    color: var(--c-gray-2);
 }
 </style>
