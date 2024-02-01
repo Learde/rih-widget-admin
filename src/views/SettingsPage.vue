@@ -1,5 +1,11 @@
 <script setup>
-import { BaseSelectMenu, BaseToggler, CheckboxWithAdditional } from "@/components";
+import {
+    BaseFormGroup,
+    BaseSelectMenu,
+    BaseSquareInput,
+    BaseToggler,
+    CheckboxWithAdditional,
+} from "@/components";
 import { ref } from "vue";
 
 const FILTERS_POSITION_META = {
@@ -105,6 +111,62 @@ const settings = ref({
             </div>
             <hr />
             <h3>Срок аренды</h3>
+            <div class="submenu">
+                <BaseFormGroup>
+                    <template #label> Длительность аренды по умолчанию </template>
+                    <template #content>
+                        <div class="inputs">
+                            <BaseSquareInput min="0">
+                                <template #label> Дни </template>
+                            </BaseSquareInput>
+                            <BaseSquareInput min="0" max="23">
+                                <template #label> Часы </template>
+                            </BaseSquareInput>
+                            <BaseSquareInput min="0" max="59">
+                                <template #label> Минуты </template>
+                            </BaseSquareInput>
+                        </div>
+                    </template>
+                </BaseFormGroup>
+                <BaseFormGroup>
+                    <template #label> Арендовать можно с </template>
+                    <template #content>
+                        <div class="inputs">
+                            <BaseSquareInput min="0" max="23">
+                                <template #label> Часы </template>
+                            </BaseSquareInput>
+                            <BaseSquareInput min="0" max="59">
+                                <template #label> Минуты </template>
+                            </BaseSquareInput>
+                        </div>
+                    </template>
+                </BaseFormGroup>
+                <BaseFormGroup>
+                    <template #label> Арендовать можно до </template>
+                    <template #content>
+                        <div class="inputs">
+                            <BaseSquareInput min="0" max="23">
+                                <template #label> Часы </template>
+                            </BaseSquareInput>
+                            <BaseSquareInput min="0" max="59">
+                                <template #label> Минуты </template>
+                            </BaseSquareInput>
+                        </div>
+                    </template>
+                </BaseFormGroup>
+                <BaseFormGroup>
+                    <template #label> Аренда не дольше, чем </template>
+                    <template #content>
+                        <div class="inputs">
+                            <BaseSquareInput min="0">
+                                <template #label> Дни </template>
+                            </BaseSquareInput>
+                        </div>
+                    </template>
+                </BaseFormGroup>
+            </div>
+            <hr />
+            <h3>Цвета</h3>
         </div>
     </div>
 </template>
@@ -125,7 +187,7 @@ h3 {
 }
 
 hr {
-    height: 0.33px;
+    height: 0.5px;
     margin: 20px 0 12px;
     background-color: var(--c-gray-3);
     border: none;
@@ -135,5 +197,11 @@ hr {
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+.inputs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
 }
 </style>
