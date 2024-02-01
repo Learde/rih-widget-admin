@@ -1,5 +1,5 @@
 <script setup>
-import { BaseToggler, CheckboxWithAdditional } from "@/components";
+import { BaseSelectMenu, BaseToggler, CheckboxWithAdditional } from "@/components";
 import { ref } from "vue";
 
 const FILTERS_POSITION_META = {
@@ -64,12 +64,30 @@ const settings = ref({
             </div>
             <hr />
             <h3>Фильтры</h3>
-            <BaseToggler :meta="FILTERS_POSITION_META" v-model="settings.filtersPosition">
-                <template #label> Расположение фильтров </template>
-            </BaseToggler>
-            <BaseToggler :meta="FILTER_CATEGORY_META" v-model="settings.filterCategory">
-                <template #label> Фильтр по категории </template>
-            </BaseToggler>
+            <div class="submenu">
+                <BaseToggler :meta="FILTERS_POSITION_META" v-model="settings.filtersPosition">
+                    <template #label> Расположение фильтров </template>
+                </BaseToggler>
+                <BaseSelectMenu>
+                    <template #label> Обязательные фильтры </template>
+                    <template #additional>
+                        Для показа витрины, необходимо будет сначала выбрать фильтр
+                    </template>
+                </BaseSelectMenu>
+                <BaseSelectMenu>
+                    <template #label> Скрытые фильтры </template>
+                    <template #additional> Эти фильтры не будут отображаться на витрине </template>
+                </BaseSelectMenu>
+                <BaseSelectMenu>
+                    <template #label> Скрытые категории </template>
+                    <template #additional>
+                        Эти категории не будут отображаться на витрине
+                    </template>
+                </BaseSelectMenu>
+                <BaseToggler :meta="FILTER_CATEGORY_META" v-model="settings.filterCategory">
+                    <template #label> Фильтр по категории </template>
+                </BaseToggler>
+            </div>
         </div>
         <div>
             <h3>Изображения</h3>
@@ -116,6 +134,6 @@ hr {
 .submenu {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 20px;
 }
 </style>
