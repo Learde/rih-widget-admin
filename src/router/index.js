@@ -16,6 +16,22 @@ const router = createRouter({
             },
             component: () => import("@/views/SettingsPage.vue"),
         },
+        {
+            path: "/inventories",
+            name: "Inventories",
+            meta: {
+                title: "Инвентарь",
+                addRouteName: "AddInventory",
+            },
+            component: () => import("@/views/InventoriesPage.vue"),
+        },
+        {
+            path: "/inventories/add",
+            name: "AddInventory",
+            meta: {
+                title: "Добавить инвентарь",
+            },
+        },
     ],
 });
 

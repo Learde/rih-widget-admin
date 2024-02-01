@@ -1,11 +1,15 @@
 <script setup>
-import { IconChevron } from "@/icones";
+import { IconChevron, IconPlus } from "@/icones";
 import { useRouter } from "vue-router";
 
 defineProps({
     title: {
         type: String,
         default: "",
+    },
+    addRouteName: {
+        type: String,
+        default: null,
     },
 });
 
@@ -18,6 +22,11 @@ const router = useRouter();
         <h2 class="title">
             {{ title }}
         </h2>
+        <IconPlus
+            v-if="Boolean(addRouteName)"
+            class="plus"
+            @click="router.push({ name: addRouteName })"
+        />
     </div>
 </template>
 
@@ -31,6 +40,17 @@ const router = useRouter();
     color: var(--c-primary);
     cursor: pointer;
     transform: rotate(180deg) translateY(50%);
+}
+
+.plus {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: auto;
+    height: 20px;
+    color: var(--c-primary);
+    cursor: pointer;
+    transform: translateY(-50%);
 }
 
 .title {

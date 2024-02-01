@@ -13,7 +13,7 @@ import { RouterLink } from "vue-router";
 
 <template>
     <main class="main">
-        <RouterLink class="link" :to="{ name: 'Settings' }">
+        <RouterLink class="link" :to="{ name: 'Inventories' }">
             <div class="icon-wrapper"><IconInventory class="icon" /></div>
             <span>Склад инвентаря</span> <IconChevron class="chevron" />
         </RouterLink>

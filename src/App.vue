@@ -11,6 +11,10 @@ const hasHeader = computed(() => {
 </script>
 
 <template>
-    <TheHeader v-if="hasHeader" :title="route.meta.title" />
+    <TheHeader
+        v-if="hasHeader"
+        :title="route.meta.title"
+        :add-route-name="route.meta?.addRouteName"
+    />
     <RouterView />
 </template>
