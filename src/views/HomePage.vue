@@ -69,4 +69,8 @@ import { RouterLink } from "vue-router";
     align-items: center;
     width: 20px;
 }
+
+.icon {
+    color: var(--c-primary);
+}
 </style>
