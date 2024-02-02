@@ -73,7 +73,7 @@ defineProps({
 
     & .actions {
         display: flex;
-        gap: 12px;
+        gap: 20px;
         align-items: center;
         margin-left: auto;
     }

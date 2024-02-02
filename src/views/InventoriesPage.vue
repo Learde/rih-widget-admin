@@ -47,5 +47,12 @@ const inventories = [
 
 .search-input {
     width: 100%;
+    margin-bottom: 20px;
+}
+
+.inventories-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
 }
 </style>

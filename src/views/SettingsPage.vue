@@ -39,7 +39,7 @@ const settings = ref({
     filtersPosition: null,
     filterCategory: null,
     primaryColor: "#2e55b9",
-    backgroundColor: "#fafafa"
+    backgroundColor: "#fafafa",
 });
 </script>
 
