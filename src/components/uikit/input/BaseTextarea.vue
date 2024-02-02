@@ -16,7 +16,7 @@ defineProps({
 <style lang="scss" scoped>
 .input {
     width: 100%;
-    height: 60px;
+    height: 65px;
     padding: 12.5px 12px;
     font-family: Roboto, sans-serif;
     font-size: 15px;
