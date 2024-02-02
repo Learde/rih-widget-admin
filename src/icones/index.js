@@ -7,3 +7,4 @@ export { default as IconCheck } from "./IconCheck.vue";
 export { default as IconRIHLogo } from "./IconRIHLogo.vue";
 export { default as IconPlus } from "./IconPlus.vue";
 export { default as IconSearch } from "./IconSearch.vue";
+export { default as IconDelete } from "./IconDelete.vue";
