@@ -1,3 +1,5 @@
+export { default as BaseBadge } from "./badge/BaseBadge.vue";
+
 export { default as BaseCheckbox } from "./checkbox/BaseCheckbox.vue";
 export { default as CheckboxWithAdditional } from "./checkbox/CheckboxWithAdditional.vue";
 
