@@ -1,6 +1,6 @@
 <script setup>
 import { BaseBadge } from "@/components";
-import { IconDelete } from "@/icones";
+import { IconDelete, IconSettings } from "@/icones";
 
 defineProps({
     inventory: {
@@ -15,10 +15,16 @@ defineProps({
         <div class="img-wrapper">
             <div class="img" :style="{ backgroundImage: `url(${inventory.avatar})` }"></div>
         </div>
-        <div>
+        <div class="content">
             <h4>{{ inventory.title }}</h4>
             <span class="article">Артикул: {{ inventory.article }}</span>
-            <BaseBadge :color="inventory.state.color">{{ inventory.state.title }}</BaseBadge>
+            <BaseBadge class="badge" :color="inventory.state.color" size="sm">{{
+                inventory.state.title
+            }}</BaseBadge>
+        </div>
+        <div class="actions">
+            <IconSettings class="edit" />
+            <IconDelete class="delete" />
         </div>
     </div>
 </template>
@@ -36,7 +42,7 @@ defineProps({
     }
 
     & .img {
-        width: 100px;
+        width: 95px;
         height: 100%;
         background-position: center;
         background-size: cover;
@@ -44,17 +50,46 @@ defineProps({
     }
 
     & h4 {
-        margin-bottom: 5px;
         font-size: 15px;
         line-height: 20px;
     }
 
     & .article {
         display: inline-block;
-        margin-bottom: 5px;
         font-size: 12px;
         line-height: 16px;
         color: var(--c-gray-5);
+    }
+
+    & .content {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    & .badge {
+        align-self: flex-start;
+    }
+
+    & .actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-left: auto;
+    }
+
+    & .edit {
+        width: 19px;
+        height: auto;
+        color: var(--c-primary);
+        cursor: pointer;
+    }
+
+    & .delete {
+        width: 17px;
+        height: auto;
+        color: var(--c-red);
+        cursor: pointer;
     }
 }
 </style>

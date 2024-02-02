@@ -37,6 +37,10 @@ const props = defineProps({
         type: String,
         default: "javascript:void(0)",
     },
+    block: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const badgeClasses = computed(() => {
@@ -51,6 +55,10 @@ const badgeClasses = computed(() => {
     props.size && classes.push(badgeSize);
     props.type && classes.push(badgeType);
     props.noWrap && classes.push(badgeNoWrap);
+
+    if (props.block) {
+        classes.push("base-badge--block");
+    }
 
     return classes;
 });
@@ -75,16 +83,21 @@ const badgeStyles = computed(() => {
 
 <style lang="scss" scoped>
 .base-badge {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     max-width: 100%;
     padding: var(--badge-padding);
     font-size: var(--badge-font-size);
+    line-height: var(--badge-line-height);
     color: var(--c-text);
     background-color: var(--badge-color);
     border: 1px solid var(--badge-border-color);
     border-radius: var(--badge-border-radius);
+
+    &--block {
+        display: flex;
+    }
 
     &--primary {
         --badge-border-color: var(--c-green-50);
@@ -102,13 +115,14 @@ const badgeStyles = computed(() => {
     }
 
     &--gray {
-        --badge-border-color: var(--c-neutral-40);
+        --badge-border-color: var(--c-gray-3);
         --badge-color: var(--c-neutral-11);
     }
 
     &--sm {
-        --badge-font-size: 14px;
-        --badge-padding: 3px 14px;
+        --badge-font-size: 12px;
+        --badge-line-height: 16px;
+        --badge-padding: 1px 7.5px;
         --badge-border-radius: 30px;
     }
 

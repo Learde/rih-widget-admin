@@ -1,10 +1,14 @@
 <template>
-    <svg xmlns="http://www.w3.org/2000/svg" width="0.88em" height="1em" viewBox="0 0 448 512">
+    <svg xmlns="http://www.w3.org/2000/svg" width="1.05em" height="1.05em" viewBox="0 0 24 24">
         <path
             fill="currentColor"
-            d="M50.7 58.5L0 160h208V32H93.7c-18.2 0-34.8 10.3-43 26.5zM240 160h208L397.3 58.5c-8.2-16.2-24.8-26.5-43-26.5H240v128zm208 32H0v224c0 35.3 28.7 64 64 64h320c35.3 0 64-28.7 64-64V192z"
+            d="M5 22q-.825 0-1.412-.587T3 20V8.725q-.45-.275-.725-.712T2 7V4q0-.825.588-1.412T4 2h16q.825 0 1.413.588T22 4v3q0 .575-.275 1.013T21 8.724V20q0 .825-.587 1.413T19 22zM5 9v11h14V9zM4 7h16V4H4zm6 7h4q.425 0 .713-.288T15 13q0-.425-.288-.712T14 12h-4q-.425 0-.712.288T9 13q0 .425.288.713T10 14m2 .5"
         ></path>
     </svg>
 </template>
 
-<script setup></script>
+<script>
+export default {
+    name: "MaterialSymbolsInventory2OutlineRounded",
+};
+</script>

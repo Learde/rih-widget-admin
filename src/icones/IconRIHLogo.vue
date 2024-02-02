@@ -1,5 +1,11 @@
 <template>
-    <svg width="0.85em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 61 93">
+    <svg
+        width="0.75em"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 61 93"
+        style="position: relative; left: 2px"
+    >
         <path
             fill-rule="evenodd"
             clip-rule="evenodd"
