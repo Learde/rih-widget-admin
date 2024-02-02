@@ -1,6 +1,6 @@
 <script setup>
-import { BaseBadge } from "@/components";
 import { IconDelete, IconSettings } from "@/icones";
+import { BaseBadge } from "@/components";
 
 defineProps({
     inventory: {
@@ -8,6 +8,7 @@ defineProps({
         required: true,
     },
 });
+defineEmits(["delete", "edit"]);
 </script>
 
 <template>
@@ -23,8 +24,8 @@ defineProps({
             }}</BaseBadge>
         </div>
         <div class="actions">
-            <IconSettings class="edit" />
-            <IconDelete class="delete" />
+            <IconSettings class="edit" @click="$emit('edit')" />
+            <IconDelete class="delete" @click="$emit('delete')" />
         </div>
     </div>
 </template>

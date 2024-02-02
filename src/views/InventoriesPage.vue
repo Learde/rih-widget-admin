@@ -1,5 +1,6 @@
 <script setup>
-import { BaseSearchInput, InventoryCard } from "@/components";
+import { BaseDeleteModal, BaseSearchInput, InventoryCard } from "@/components";
+import { ref } from "vue";
 
 const inventories = [
     {
@@ -24,6 +25,12 @@ const inventories = [
         state: { title: "Свободен", stateConst: "FREE", color: "#ff0000" },
     },
 ];
+
+const showModal = ref(false);
+
+const handleDeleting = function () {
+    showModal.value = true;
+};
 </script>
 
 <template>
@@ -34,9 +41,15 @@ const inventories = [
                 :inventory="inventory"
                 v-for="inventory in inventories"
                 :key="inventory.id"
+                @delete="handleDeleting"
             />
         </div>
     </div>
+
+    <BaseDeleteModal v-model="showModal">
+        <template #title> Удаление инвентаря </template>
+        <template #description> Вы уверены, что хотите удалить этот инвентарь? </template>
+    </BaseDeleteModal>
 </template>
 
 <style lang="scss" scoped>
