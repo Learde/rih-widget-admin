@@ -1,5 +1,12 @@
 <script setup>
-import { BaseFormGroup, BaseInput, BaseTextarea } from "@/components";
+import {
+    BaseButton,
+    BaseFormGroup,
+    BaseImageSelect,
+    BaseInput,
+    BaseSelectMenu,
+    BaseTextarea,
+} from "@/components";
 </script>
 
 <template>
@@ -28,6 +35,18 @@ import { BaseFormGroup, BaseInput, BaseTextarea } from "@/components";
                 <BaseTextarea placeholder="Введите описание" />
             </template>
         </BaseFormGroup>
+        <BaseSelectMenu>
+            <template #label> Статус </template>
+            <template #additional> Для показа на витрине выберите статус «свободен» </template>
+        </BaseSelectMenu>
+        <BaseSelectMenu>
+            <template #label> Категория </template>
+        </BaseSelectMenu>
+        <BaseSelectMenu>
+            <template #label> Тариф </template>
+        </BaseSelectMenu>
+        <BaseImageSelect />
+        <BaseButton>Сохранить</BaseButton>
     </div>
 </template>
 
