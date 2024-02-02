@@ -1,29 +1,36 @@
 <script setup>
-import { IconSearch } from "@/icones";
+defineProps({
+    placeholder: {
+        type: String,
+        default: "",
+    },
+});
 </script>
 
 <template>
     <div class="wrapper">
-        <IconSearch class="icon" />
-        <input class="input" placeholder="Поиск" />
+        <textarea class="input" :placeholder="placeholder" />
     </div>
 </template>
 
 <style lang="scss" scoped>
 .input {
     width: 100%;
-    height: 45px;
-    padding-left: 32px;
+    height: 60px;
+    padding: 12.5px 12px;
+    font-family: Roboto, sans-serif;
     font-size: 15px;
     font-weight: 400;
     color: var(--c-text);
     caret-color: var(--c-primary);
+    resize: vertical;
     background-color: var(--c-gray-4);
     border: 1px solid rgb(0 0 0 / 12%);
     border-radius: 10px;
     outline: none;
 
     &::placeholder {
+        font-family: Roboto, sans-serif;
         color: var(--c-gray-5);
         opacity: 1;
     }

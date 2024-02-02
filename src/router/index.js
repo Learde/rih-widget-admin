@@ -31,6 +31,7 @@ const router = createRouter({
             meta: {
                 title: "Добавить инвентарь",
             },
+            component: () => import("@/views/InventoryAddPage.vue"),
         },
     ],
 });

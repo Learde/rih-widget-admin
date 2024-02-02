@@ -9,8 +9,10 @@ export { default as BaseDeleteModal } from "./modal/BaseDeleteModal.vue";
 
 export { default as BaseSelectMenu } from "./select/BaseSelectMenu.vue";
 
-export { default as BaseSquareInput } from "./input/BaseSquareInput.vue";
+export { default as BaseInput } from "./input/BaseInput.vue";
 export { default as BaseSearchInput } from "./input/BaseSearchInput.vue";
+export { default as BaseSquareInput } from "./input/BaseSquareInput.vue";
+export { default as BaseTextarea } from "./input/BaseTextarea.vue";
 
 export { default as BaseFormGroup } from "./form-group/BaseFormGroup.vue";
 

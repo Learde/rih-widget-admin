@@ -1,11 +1,15 @@
 <script setup>
-import { IconSearch } from "@/icones";
+defineProps({
+    placeholder: {
+        type: String,
+        default: "",
+    },
+});
 </script>
 
 <template>
     <div class="wrapper">
-        <IconSearch class="icon" />
-        <input class="input" placeholder="Поиск" />
+        <input class="input" :placeholder="placeholder" />
     </div>
 </template>
 
@@ -13,7 +17,7 @@ import { IconSearch } from "@/icones";
 .input {
     width: 100%;
     height: 45px;
-    padding-left: 32px;
+    padding-left: 12px;
     font-size: 15px;
     font-weight: 400;
     color: var(--c-text);
