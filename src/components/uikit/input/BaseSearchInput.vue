@@ -17,6 +17,7 @@ import { IconSearch } from "@/icones";
     font-size: 15px;
     font-weight: 500;
     color: var(--c-gray-5);
+    caret-color: var(--c-primary);
     background-color: var(--c-gray-6);
     border: none;
     border-radius: 10px;
