@@ -1,5 +1,7 @@
 export { default as BaseBadge } from "./badge/BaseBadge.vue";
 
+export { default as BaseButton } from "./button/BaseButton.vue";
+
 export { default as BaseCheckbox } from "./checkbox/BaseCheckbox.vue";
 export { default as CheckboxWithAdditional } from "./checkbox/CheckboxWithAdditional.vue";
 
@@ -8,6 +10,7 @@ export { default as BaseToggler } from "./toggler/BaseToggler.vue";
 export { default as BaseDeleteModal } from "./modal/BaseDeleteModal.vue";
 
 export { default as BaseSelectMenu } from "./select/BaseSelectMenu.vue";
+export { default as BaseImageSelect } from "./select/BaseImageSelect.vue";
 
 export { default as BaseInput } from "./input/BaseInput.vue";
 export { default as BaseSearchInput } from "./input/BaseSearchInput.vue";
