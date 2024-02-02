@@ -34,9 +34,11 @@ const router = useRouter();
 .chevron {
     position: absolute;
     top: 50%;
-    left: 0;
+    left: -20px;
+    box-sizing: content-box;
     width: auto;
     height: 20px;
+    padding: 20px;
     color: var(--c-primary);
     cursor: pointer;
     transform: rotate(180deg) translateY(50%);
@@ -45,9 +47,11 @@ const router = useRouter();
 .plus {
     position: absolute;
     top: 50%;
-    right: 0;
+    right: -20px;
+    box-sizing: content-box;
     width: auto;
     height: 20px;
+    padding: 20px;
     color: var(--c-primary);
     cursor: pointer;
     transform: translateY(-50%);
