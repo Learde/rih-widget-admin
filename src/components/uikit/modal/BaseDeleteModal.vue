@@ -2,19 +2,29 @@
 import { useVModel } from "@vueuse/core";
 
 const props = defineProps({ modelValue: { type: Boolean, default: false } });
-const emit = defineEmits(["update:modelValue", "accept"]);
+const emit = defineEmits(["update:modelValue", "accept", "close"]);
 
 const modelValue = useVModel(props, "modelValue", emit);
+
+const close = function () {
+    modelValue.value = false;
+    emit("close");
+};
+
+const accept = function () {
+    emit("accept");
+    close();
+};
 </script>
 
 <template>
-    <div class="wrapper" v-if="modelValue" @click="modelValue = false">
+    <div class="wrapper" v-if="modelValue" @click="close">
         <div class="content" @click.stop="">
             <h3 class="title"><slot name="title" /></h3>
             <p class="description"><slot name="description" /></p>
             <div class="actions">
-                <button class="button cancel" @click="modelValue = false">Отмена</button>
-                <button class="button delete">Удалить</button>
+                <button class="button cancel" @click="close">Отмена</button>
+                <button class="button delete" @click="accept">Удалить</button>
             </div>
         </div>
     </div>

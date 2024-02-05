@@ -20,8 +20,7 @@ const changePage = function (page) {
 };
 
 let prevSearch = "";
-
-watchEffect(() => {
+const reload = function () {
     if (prevSearch !== debouncedSearchValue.value) {
         currentPage.value = 1;
     }
@@ -33,12 +32,21 @@ watchEffect(() => {
         perPage: perPage.value,
         page: currentPage.value,
     });
-});
+};
+
+watchEffect(reload);
 
 const showModal = ref(false);
+const deletingId = ref(null);
 
-const handleDeleting = function () {
+const handleDeleting = function (id) {
     showModal.value = true;
+    deletingId.value = id;
+};
+
+const deleteInventory = async function () {
+    await inventoriesStore.deleteOne(deletingId.value);
+    reload();
 };
 </script>
 
@@ -51,7 +59,7 @@ const handleDeleting = function () {
                     v-for="inventory in inventoriesStore.listData"
                     :inventory="inventory"
                     :key="inventory.id"
-                    @delete="handleDeleting"
+                    @delete="handleDeleting(inventory.id)"
                 />
             </template>
             <template v-else>
@@ -68,7 +76,7 @@ const handleDeleting = function () {
         />
     </div>
 
-    <BaseDeleteModal v-model="showModal">
+    <BaseDeleteModal v-model="showModal" @accept="deleteInventory" @close="deletingId = null">
         <template #title> Удаление инвентаря </template>
         <template #description> Вы уверены, что хотите удалить этот инвентарь? </template>
     </BaseDeleteModal>
