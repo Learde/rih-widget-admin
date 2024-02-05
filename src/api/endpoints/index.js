@@ -1,0 +1,1 @@
+export { apiInventory } from "./inventory";
