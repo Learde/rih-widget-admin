@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from "vue";
 
-import { pSBC } from "@/assets/pSBC.js";
+import { pSBC } from "@/lib";
 
 const props = defineProps({
     variant: {
