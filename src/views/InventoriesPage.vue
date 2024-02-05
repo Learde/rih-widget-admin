@@ -1,6 +1,8 @@
 <script setup>
 import { BaseDeleteModal, BasePaginate, BaseSearchInput, InventoryCard } from "@/components";
+import { IconInventory, IconSearch } from "@/icones";
 import { computed, ref, watchEffect } from "vue";
+import { RouterLink } from "vue-router";
 import { refDebounced } from "@vueuse/core";
 import { useInventoriesStore } from "@/stores";
 
@@ -13,6 +15,14 @@ const inventoriesStore = useInventoriesStore();
 
 const totalPages = computed(() => {
     return Math.ceil(inventoriesStore.meta.total / perPage.value);
+});
+
+const hasInventories = computed(() => {
+    return inventoriesStore.isManyLoading || inventoriesStore.listData.length > 0;
+});
+
+const isEmptySearchValue = computed(() => {
+    return !debouncedSearchValue.value || debouncedSearchValue.value.trim().length === 0;
 });
 
 const changePage = function (page) {
@@ -52,28 +62,44 @@ const deleteInventory = async function () {
 
 <template>
     <div class="inventories-page">
-        <BaseSearchInput v-model="searchValue" class="search-input" />
-        <div class="inventories-list">
-            <template v-if="!inventoriesStore.isManyLoading">
-                <InventoryCard
-                    v-for="inventory in inventoriesStore.listData"
-                    :inventory="inventory"
-                    :key="inventory.id"
-                    @delete="handleDeleting(inventory.id)"
-                />
-            </template>
-            <template v-else>
-                <InventoryCard v-for="id in 12" :inventory="{}" :key="id" is-loading />
-            </template>
+        <template v-if="hasInventories || !isEmptySearchValue">
+            <BaseSearchInput v-model="searchValue" class="search-input" />
+            <div class="inventories-list">
+                <template v-if="!inventoriesStore.isManyLoading">
+                    <InventoryCard
+                        v-for="inventory in inventoriesStore.listData"
+                        :inventory="inventory"
+                        :key="inventory.id"
+                        @delete="handleDeleting(inventory.id)"
+                    />
+                </template>
+                <template v-else>
+                    <InventoryCard v-for="id in 12" :inventory="{}" :key="id" is-loading />
+                </template>
+            </div>
+            <div
+                v-if="inventoriesStore.listData.length === 0 && !isEmptySearchValue"
+                class="no-inventories mt-small"
+            >
+                <IconSearch class="no-inventories-icon" />
+                <span class="no-inventories-text"> Ничего не найдено </span>
+            </div>
+            <BasePaginate
+                class="paginate"
+                :page-count="totalPages"
+                :click-handler="changePage"
+                :model-value="currentPage"
+                prev-text="<"
+                next-text=">"
+            />
+        </template>
+        <div v-else class="no-inventories">
+            <IconInventory class="no-inventories-icon" />
+            <span class="no-inventories-text"> Нет добавленного инвентаря на складе </span>
+            <RouterLink class="add-inventory" :to="{ name: 'AddInventory' }">
+                Добавить инвентарь
+            </RouterLink>
         </div>
-        <BasePaginate
-            class="paginate"
-            :page-count="totalPages"
-            :click-handler="changePage"
-            :model-value="currentPage"
-            prev-text="<"
-            next-text=">"
-        />
     </div>
 
     <BaseDeleteModal v-model="showModal" @accept="deleteInventory" @close="deletingId = null">
@@ -101,5 +127,40 @@ const deleteInventory = async function () {
 
 .paginate {
     align-self: center;
+}
+
+.no-inventories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 130px;
+
+    &.mt-small {
+        margin-top: 50px;
+    }
+}
+
+.no-inventories-icon {
+    width: 45px;
+    height: auto;
+    margin-bottom: 12px;
+    color: var(--c-gray-7);
+}
+
+.no-inventories-text {
+    display: inline-block;
+    width: 250px;
+    margin-bottom: 24px;
+    font-size: 18px;
+    line-height: 24px;
+    color: var(--c-gray-7);
+    text-align: center;
+}
+
+.add-inventory {
+    font-size: 15px;
+    line-height: 20px;
+    color: var(--c-primary);
 }
 </style>
