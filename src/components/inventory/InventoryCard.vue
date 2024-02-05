@@ -45,8 +45,9 @@ defineEmits(["delete", "edit"]);
     & .img {
         width: 95px;
         height: 100%;
+        background-repeat: no-repeat;
         background-position: center;
-        background-size: cover;
+        background-size: contain;
         border-radius: 10px;
     }
 

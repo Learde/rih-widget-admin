@@ -2,12 +2,15 @@
 import { RouterView, useRoute } from "vue-router";
 import { TheHeader } from "@/components";
 import { computed } from "vue";
+import { setToken } from "@/api";
 
 const route = useRoute();
 
 const hasHeader = computed(() => {
     return Boolean(route.meta?.title);
 });
+
+setToken("oFydZpjyTYlzTK8M8ZVDDENlCNLCxxy7");
 </script>
 
 <template>
