@@ -15,5 +15,11 @@ module.exports = {
     },
     rules: {
         "n/no-missing-import": "off",
+        "n/no-extraneous-import": [
+            "error",
+            {
+                allowModules: ["lodash"],
+            },
+        ],
     },
 };
