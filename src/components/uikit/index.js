@@ -9,6 +9,8 @@ export { default as BaseToggler } from "./toggler/BaseToggler.vue";
 
 export { default as BaseDeleteModal } from "./modal/BaseDeleteModal.vue";
 
+export { default as BasePaginate } from "./paginate/BasePaginate.vue";
+
 export { default as BaseSelectMenu } from "./select/BaseSelectMenu.vue";
 export { default as BaseImageSelect } from "./select/BaseImageSelect.vue";
 

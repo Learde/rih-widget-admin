@@ -7,20 +7,24 @@ defineProps({
         type: Object,
         required: true,
     },
+    isLoading: {
+        type: Boolean,
+        default: false,
+    },
 });
 defineEmits(["delete", "edit"]);
 </script>
 
 <template>
-    <div class="card">
+    <div class="card" :class="{ loading: isLoading }">
         <div class="img-wrapper">
             <div class="img" :style="{ backgroundImage: `url(${inventory.avatar})` }"></div>
         </div>
         <div class="content">
             <h4>{{ inventory.title }}</h4>
             <span class="article">Артикул: {{ inventory.article }}</span>
-            <BaseBadge class="badge" :color="inventory.state.color" size="sm">{{
-                inventory.state.title
+            <BaseBadge class="badge" :color="inventory.state?.color" size="sm">{{
+                inventory.state?.title
             }}</BaseBadge>
         </div>
         <div class="actions">
@@ -31,12 +35,15 @@ defineEmits(["delete", "edit"]);
 </template>
 
 <style lang="scss" scoped>
+@import "@/assets/skeleton";
+
 .card {
     display: flex;
     gap: 12px;
-    align-items: stretch;
+    align-items: center;
 
     & .img-wrapper {
+        height: 100%;
         padding: 3px;
         border: 1px solid var(--c-gray-3);
         border-radius: 10px;
@@ -92,6 +99,42 @@ defineEmits(["delete", "edit"]);
         height: auto;
         color: var(--c-red);
         cursor: pointer;
+    }
+
+    &.loading {
+        & .badge {
+            width: 70px;
+            height: 18px;
+        }
+
+        & h4 {
+            width: 150px;
+            height: 20px;
+        }
+
+        & .article {
+            width: 90px;
+            height: 16px;
+        }
+
+        & .actions {
+            width: 56px;
+            height: 20px;
+        }
+
+        & .img-wrapper,
+        & .badge,
+        & h4,
+        & .article,
+        & .actions {
+            @include skeleton;
+        }
+    }
+}
+
+@keyframes shine {
+    to {
+        background-position-x: -200%;
     }
 }
 </style>

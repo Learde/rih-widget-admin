@@ -1,11 +1,39 @@
 <script setup>
-import { BaseDeleteModal, BaseSearchInput, InventoryCard } from "@/components";
-import { ref } from "vue";
+import { BaseDeleteModal, BasePaginate, BaseSearchInput, InventoryCard } from "@/components";
+import { computed, ref, watchEffect } from "vue";
+import { refDebounced } from "@vueuse/core";
 import { useInventoriesStore } from "@/stores";
+
+const perPage = ref(12);
+const currentPage = ref(1);
+const searchValue = ref("");
+const debouncedSearchValue = refDebounced(searchValue, 400);
 
 const inventoriesStore = useInventoriesStore();
 
-inventoriesStore.fetchMany();
+const totalPages = computed(() => {
+    return Math.ceil(inventoriesStore.meta.total / perPage.value);
+});
+
+const changePage = function (page) {
+    currentPage.value = page;
+};
+
+let prevSearch = "";
+
+watchEffect(() => {
+    if (prevSearch !== debouncedSearchValue.value) {
+        currentPage.value = 1;
+    }
+
+    prevSearch = debouncedSearchValue.value;
+
+    inventoriesStore.fetchMany({
+        search: debouncedSearchValue.value,
+        perPage: perPage.value,
+        page: currentPage.value,
+    });
+});
 
 const showModal = ref(false);
 
@@ -16,15 +44,28 @@ const handleDeleting = function () {
 
 <template>
     <div class="inventories-page">
-        <BaseSearchInput class="search-input" />
+        <BaseSearchInput v-model="searchValue" class="search-input" />
         <div class="inventories-list">
-            <InventoryCard
-                :inventory="inventory"
-                v-for="inventory in inventoriesStore.listData"
-                :key="inventory.id"
-                @delete="handleDeleting"
-            />
+            <template v-if="!inventoriesStore.isManyLoading">
+                <InventoryCard
+                    v-for="inventory in inventoriesStore.listData"
+                    :inventory="inventory"
+                    :key="inventory.id"
+                    @delete="handleDeleting"
+                />
+            </template>
+            <template v-else>
+                <InventoryCard v-for="id in 12" :inventory="{}" :key="id" is-loading />
+            </template>
         </div>
+        <BasePaginate
+            class="paginate"
+            :page-count="totalPages"
+            :click-handler="changePage"
+            :model-value="currentPage"
+            prev-text="<"
+            next-text=">"
+        />
     </div>
 
     <BaseDeleteModal v-model="showModal">
@@ -48,5 +89,9 @@ const handleDeleting = function () {
     display: grid;
     grid-template-columns: 1fr;
     gap: 24px;
+}
+
+.paginate {
+    align-self: center;
 }
 </style>

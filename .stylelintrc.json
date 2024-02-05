@@ -4,5 +4,8 @@
         "stylelint-config-standard-vue",
         "stylelint-config-recommended-vue/scss",
         "stylelint-config-recess-order"
-    ]
+    ],
+    "rules": {
+        "import-notation": "off"
+    }
 }

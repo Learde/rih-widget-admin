@@ -1,11 +1,22 @@
 <script setup>
 import { IconSearch } from "@/icones";
+import { useVModel } from "@vueuse/core";
+
+const props = defineProps({
+    modelValue: {
+        type: String,
+        default: "",
+    },
+});
+const emit = defineEmits(["update:modelValue"]);
+
+const value = useVModel(props, "modelValue", emit);
 </script>
 
 <template>
     <div class="wrapper">
         <IconSearch class="icon" />
-        <input class="input" placeholder="Поиск" />
+        <input v-model="value" class="input" placeholder="Поиск" />
     </div>
 </template>
 
