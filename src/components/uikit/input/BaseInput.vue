@@ -1,15 +1,34 @@
 <script setup>
-defineProps({
+import { useVModel } from "@vueuse/core";
+
+const props = defineProps({
+    modelValue: {
+        type: [String, Number],
+        default: null,
+    },
     placeholder: {
         type: String,
         default: "",
     },
+    isError: {
+        type: Boolean,
+        default: false,
+    },
 });
+const emit = defineEmits(["update:modelValue", "input"]);
+
+const modelValue = useVModel(props, "modelValue", emit);
 </script>
 
 <template>
     <div class="wrapper">
-        <input class="input" :placeholder="placeholder" />
+        <input
+            class="input"
+            :class="{ error: isError }"
+            :placeholder="placeholder"
+            v-model="modelValue"
+            @input="$emit('input', $event)"
+        />
     </div>
 </template>
 
@@ -26,6 +45,11 @@ defineProps({
     border: 1px solid rgb(0 0 0 / 12%);
     border-radius: 10px;
     outline: none;
+
+    &.error {
+        background-color: var(--c-red-2);
+        border-color: var(--c-red);
+    }
 
     &::placeholder {
         color: var(--c-gray-5);
