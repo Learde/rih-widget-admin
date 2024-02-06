@@ -12,3 +12,9 @@
         color: transparent !important;
     }
 }
+
+@keyframes shine {
+    to {
+        background-position-x: -200%;
+    }
+}

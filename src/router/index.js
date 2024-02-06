@@ -33,6 +33,14 @@ const router = createRouter({
             },
             component: () => import("@/views/inventory/InventoryAddPage.vue"),
         },
+        {
+            path: "/categories",
+            name: "Categories",
+            meta: {
+                title: "Категории",
+            },
+            component: () => import("@/views/category/CategoriesPage.vue"),
+        },
     ],
 });
 

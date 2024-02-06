@@ -30,17 +30,28 @@ const reload = function () {
         <template #label> Статус * </template>
         <template #modal-content>
             <div class="select-state-content">
-                <SelectInventoryStateItem
-                    v-for="(state, index) in inventoryStatesStore.listData"
-                    :key="state.id"
-                    :state="state"
-                    :description="
-                        statesDescription[state.stateConst] ?? statesDescription['default']
-                    "
-                    :has-border="index !== inventoryStatesStore.listData.length - 1"
-                    :is-active="state.id === modelValue?.id"
-                    @click="$emit('update:modelValue', state)"
-                />
+                <template v-if="!inventoryStatesStore.isManyLoading">
+                    <SelectInventoryStateItem
+                        v-for="(state, index) in inventoryStatesStore.listData"
+                        :key="state.id"
+                        :state="state"
+                        :description="
+                            statesDescription[state.stateConst] ?? statesDescription['default']
+                        "
+                        :has-border="index !== inventoryStatesStore.listData.length - 1"
+                        :is-active="state.id === modelValue?.id"
+                        @click="$emit('update:modelValue', state)"
+                    />
+                </template>
+                <template v-else>
+                    <SelectInventoryStateItem
+                        v-for="index in 4"
+                        :key="index"
+                        :state="{}"
+                        :has-border="index !== 4"
+                        is-loading
+                    />
+                </template>
             </div>
         </template>
         <template #error-text>

@@ -19,23 +19,37 @@ defineProps({
         type: Boolean,
         default: false,
     },
+    isLoading: {
+        type: Boolean,
+        default: false,
+    },
 });
 </script>
 
 <template>
     <div class="select-state-badge-wrapper" @click="$emit('click')">
-        <BaseBadge class="select-state-badge" :color="state.color" size="md" padding-x="8px">
+        <BaseBadge
+            class="select-state-badge"
+            :class="{ loading: isLoading }"
+            :color="state.color"
+            size="md"
+            padding-x="8px"
+        >
             {{ state.title }}
         </BaseBadge>
     </div>
     <div class="select-state-description-wrapper" :class="{ mr: isActive }" @click="$emit('click')">
-        <span class="select-state-description">{{ description }}</span>
+        <span class="select-state-description" :class="{ loading: isLoading }">{{
+            description
+        }}</span>
         <IconCheck v-if="isActive" class="select-state-check" />
     </div>
     <hr v-if="hasBorder" class="select-state-delim" />
 </template>
 
 <style lang="scss" scoped>
+@import "@/assets/skeleton";
+
 .select-state-description {
     font-size: 12px;
     line-height: 16px;
@@ -80,5 +94,19 @@ defineProps({
     height: auto;
     color: var(--c-primary);
     transform: translateY(-50%);
+}
+
+.loading {
+    @include skeleton;
+
+    &.select-state-badge {
+        width: 119px;
+        height: 36px;
+    }
+
+    &.select-state-description {
+        width: 200px;
+        height: 16px;
+    }
 }
 </style>

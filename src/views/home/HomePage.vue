@@ -25,7 +25,7 @@ import { RouterLink } from "vue-router";
             <div class="icon-wrapper"><IconPrice class="icon" /></div>
             <span>Настройка тарифов</span> <IconChevron class="chevron" />
         </RouterLink>
-        <RouterLink class="link" :to="{ name: 'Settings' }">
+        <RouterLink class="link" :to="{ name: 'Categories' }">
             <div class="icon-wrapper"><IconCategory class="icon" /></div>
             <span>Редактор категорий инвентаря</span> <IconChevron class="chevron" />
         </RouterLink>

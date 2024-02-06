@@ -131,10 +131,4 @@ defineEmits(["delete", "edit"]);
         }
     }
 }
-
-@keyframes shine {
-    to {
-        background-position-x: -200%;
-    }
-}
 </style>
