@@ -29,6 +29,14 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    paddingY: {
+        type: String,
+        default: null,
+    },
+    paddingX: {
+        type: String,
+        default: null,
+    },
     color: {
         type: String,
         default: null,
@@ -47,7 +55,7 @@ const badgeClasses = computed(() => {
     const badgeVariant = `base-badge--${props.variant}`;
     const badgeSize = `base-badge--${props.size}`;
     const badgeType = `base-badge--${props.type}`;
-    const badgeNoWrap = `base-badge--no-wrap`;
+    const badgeNoWrap = "base-badge--no-wrap";
 
     const classes = [];
 
@@ -69,6 +77,16 @@ const badgeStyles = computed(() => {
     if (props.color) {
         styles.borderColor = props.color;
         styles.backgroundColor = pSBC(0.85, props.color);
+    }
+
+    if (props.paddingY) {
+        styles.paddingTop = props.paddingY;
+        styles.paddingBottom = props.paddingY;
+    }
+
+    if (props.paddingX) {
+        styles.paddingLeft = props.paddingX;
+        styles.paddingRight = props.paddingX;
     }
 
     return styles;
@@ -127,9 +145,10 @@ const badgeStyles = computed(() => {
     }
 
     &--md {
-        --badge-font-size: 16px;
-        --badge-padding: 5px 24px;
+        --badge-font-size: 15px;
+        --badge-padding: 8px 23.5px;
         --badge-border-radius: 30px;
+        --badge-line-height: 20px;
     }
 
     &--lg {

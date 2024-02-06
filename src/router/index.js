@@ -6,7 +6,7 @@ const router = createRouter({
         {
             path: "/",
             name: "Home",
-            component: () => import("@/views/HomePage.vue"),
+            component: () => import("@/views/home/HomePage.vue"),
         },
         {
             path: "/settings",
@@ -14,7 +14,7 @@ const router = createRouter({
             meta: {
                 title: "Настройки",
             },
-            component: () => import("@/views/SettingsPage.vue"),
+            component: () => import("@/views/settings/SettingsPage.vue"),
         },
         {
             path: "/inventories",
@@ -23,7 +23,7 @@ const router = createRouter({
                 title: "Инвентарь",
                 addRouteName: "AddInventory",
             },
-            component: () => import("@/views/InventoriesPage.vue"),
+            component: () => import("@/views/inventory/InventoriesPage.vue"),
         },
         {
             path: "/inventories/add",
@@ -31,7 +31,7 @@ const router = createRouter({
             meta: {
                 title: "Добавить инвентарь",
             },
-            component: () => import("@/views/InventoryAddPage.vue"),
+            component: () => import("@/views/inventory/InventoryAddPage.vue"),
         },
     ],
 });

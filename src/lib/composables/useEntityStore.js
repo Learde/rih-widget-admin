@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 export const useEntityStore = function ({
     getEntities,
@@ -19,6 +19,10 @@ export const useEntityStore = function ({
     const permissions = ref({});
     const prevPaginationParams = ref({});
     const prevFilters = ref({});
+
+    const hasUnloadedOptions = computed(() => {
+        return meta.value.total === 0 || meta.value.total !== listData.value.length;
+    });
 
     async function fetchMany(
         paginationParams = prevPaginationParams.value,
@@ -118,5 +122,6 @@ export const useEntityStore = function ({
         editOne,
         addOne,
         setManyLoading,
+        hasUnloadedOptions,
     };
 };

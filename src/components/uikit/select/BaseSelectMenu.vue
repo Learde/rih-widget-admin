@@ -1,16 +1,37 @@
 <script setup>
 import { IconChevron } from "@/icones";
+import { TheHeader } from "@/components";
+import { ref } from "vue";
 
 defineProps({
     isError: {
         type: Boolean,
         default: false,
     },
+    modalTitle: {
+        type: String,
+        default: "",
+    },
 });
+const emit = defineEmits(["open", "close"]);
+
+const shouldShowModal = ref(false);
+
+const showModal = function () {
+    shouldShowModal.value = true;
+    document.body.style.overflow = "hidden";
+    emit("open");
+};
+
+const closeModal = function () {
+    shouldShowModal.value = false;
+    document.body.style.overflow = "unset";
+    emit("close");
+};
 </script>
 
 <template>
-    <div class="select-menu-wrapper" :class="{ error: isError }">
+    <div class="select-menu-wrapper" :class="{ error: isError }" @click="showModal">
         <div class="select-menu">
             <div class="content">
                 <span class="label"><slot name="label" /></span>
@@ -21,6 +42,12 @@ defineProps({
         <span class="error-text" v-if="isError">
             <slot name="error-text"></slot>
         </span>
+    </div>
+    <div class="select-menu-modal" v-if="shouldShowModal">
+        <div class="app">
+            <TheHeader :title="modalTitle" :back-handler="closeModal" />
+            <slot name="modal-content"></slot>
+        </div>
     </div>
 </template>
 
@@ -97,5 +124,13 @@ defineProps({
 .content {
     display: flex;
     flex-direction: column;
+}
+
+.select-menu-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    overflow: auto;
+    background-color: #fff;
 }
 </style>

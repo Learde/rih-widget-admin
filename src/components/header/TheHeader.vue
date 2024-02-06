@@ -2,7 +2,7 @@
 import { IconChevron, IconPlus } from "@/icones";
 import { useRouter } from "vue-router";
 
-defineProps({
+const props = defineProps({
     title: {
         type: String,
         default: "",
@@ -11,14 +11,26 @@ defineProps({
         type: String,
         default: null,
     },
+    backHandler: {
+        type: Function,
+        default: null,
+    },
 });
 
 const router = useRouter();
+
+const handleBack = function () {
+    if (props.backHandler) {
+        return props.backHandler();
+    }
+
+    router.go(-1);
+};
 </script>
 
 <template>
     <div class="header">
-        <IconChevron class="chevron" @click="router.go(-1)" />
+        <IconChevron class="chevron" @click="handleBack" />
         <h2 class="title">
             {{ title }}
         </h2>
