@@ -38,8 +38,17 @@ const router = createRouter({
             name: "Categories",
             meta: {
                 title: "Категории",
+                addRouteName: "AddCategory",
             },
             component: () => import("@/views/category/CategoriesPage.vue"),
+        },
+        {
+            path: "/categories/add",
+            name: "AddCategory",
+            meta: {
+                title: "Добавить категорию",
+            },
+            component: () => import("@/views/category/CategoryAddPage.vue"),
         },
     ],
 });
