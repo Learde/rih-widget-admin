@@ -18,6 +18,7 @@ setToken("oFydZpjyTYlzTK8M8ZVDDENlCNLCxxy7");
         v-if="hasHeader"
         :title="route.meta.title"
         :add-route-name="route.meta?.addRouteName"
+        :has-ready-button="route.meta?.hasReadyButton"
     />
     <RouterView />
 </template>

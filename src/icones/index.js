@@ -1,3 +1,4 @@
+export { default as IconBars } from "./IconBars.vue";
 export { default as IconSettings } from "./IconSettings.vue";
 export { default as IconInventory } from "./IconInventory.vue";
 export { default as IconCategory } from "./IconCategory.vue";
@@ -9,3 +10,4 @@ export { default as IconPlus } from "./IconPlus.vue";
 export { default as IconSearch } from "./IconSearch.vue";
 export { default as IconDelete } from "./IconDelete.vue";
 export { default as IconPicture } from "./IconPicture.vue";
+export { default as IconEdit } from "./IconEdit.vue";

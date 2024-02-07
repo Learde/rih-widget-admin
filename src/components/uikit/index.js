@@ -22,3 +22,5 @@ export { default as BaseTextarea } from "./input/BaseTextarea.vue";
 export { default as BaseFormGroup } from "./form-group/BaseFormGroup.vue";
 
 export { default as BaseColorPicker } from "./colors/BaseColorPicker.vue";
+
+export { default as BaseTree } from "./tree/BaseTree.vue";

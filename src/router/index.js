@@ -47,6 +47,7 @@ const router = createRouter({
             name: "AddCategory",
             meta: {
                 title: "Добавить категорию",
+                hasReadyButton: true,
             },
             component: () => import("@/views/category/CategoryAddPage.vue"),
         },

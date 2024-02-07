@@ -1,11 +1,42 @@
 <script setup>
-import { IconCategory } from "@/icones";
+import { computed } from "vue";
 import { RouterLink } from "vue-router";
+
+import { BaseTree } from "@/components";
+import { IconCategory, IconBars, IconEdit, IconDelete } from "@/icones";
+import { useCategoriesStore } from "@/stores";
+
+import { mapCategoriesToTree } from "./lib/mapCategoriesToTree.js";
+
+const categoriesStore = useCategoriesStore();
+
+const reload = async function () {
+    categoriesStore.fetchMany({ page: 1, perPage: 999 });
+};
+
+const mappedCategories = computed(() => {
+    return mapCategoriesToTree(categoriesStore.listData);
+});
+
+reload();
 </script>
 
 <template>
     <div>
-        <div v-if="false"></div>
+        <div v-if="true">
+            <BaseTree :options="mappedCategories">
+                <template #default="{ node }">
+                    <div class="node-wrapper">
+                        <IconBars class="icon-bars" />
+                        <span class="node-text"> {{ node.text }} </span>
+                        <div class="node-actions">
+                            <IconEdit class="node-edit" />
+                            <IconDelete class="node-delete" />
+                        </div>
+                    </div>
+                </template>
+            </BaseTree>
+        </div>
         <div v-else class="no-categories">
             <IconCategory class="no-categories-icon" />
             <span class="no-categories-text"> Нет добавленных категорий </span>
@@ -17,6 +48,41 @@ import { RouterLink } from "vue-router";
 </template>
 
 <style lang="scss" scoped>
+.node-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.node-actions {
+    display: flex;
+    gap: 12px;
+    margin-left: auto;
+}
+
+.node-edit {
+    width: auto;
+    height: 18px;
+    color: var(--c-primary);
+}
+
+.node-delete {
+    width: auto;
+    height: 16px;
+    color: var(--c-red);
+}
+
+.node-text {
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.icon-bars {
+    width: 20px;
+    height: auto;
+    margin-right: 14px;
+}
+
 .no-categories {
     display: flex;
     flex-direction: column;
