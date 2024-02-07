@@ -1,7 +1,8 @@
 <script setup>
+import { useRouter } from "vue-router";
+
 import { IconChevron, IconPlus } from "@/icones";
 import { useEventBus } from "@/stores";
-import { useRouter } from "vue-router";
 
 const props = defineProps({
     title: {
@@ -89,7 +90,8 @@ const handleReady = function () {
     position: relative;
     display: flex;
     justify-content: center;
-    margin-bottom: 55px;
+    height: var(--app-header-height);
+    margin-bottom: var(--app-header-mb);
 }
 
 .ready-button {

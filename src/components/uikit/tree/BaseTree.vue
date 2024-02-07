@@ -38,6 +38,10 @@ onMounted(() => {
 
 <style lang="scss">
 .base-tree {
+    min-height: calc(
+        100vh - var(--app-padding-y) * 2 - var(--app-header-height) - var(--app-header-mb)
+    );
+
     & .tree-line {
         background: var(--c-gray-7);
     }
