@@ -7,6 +7,7 @@ import { IconCategory, IconBars, IconEdit, IconDelete } from "@/icones";
 import { useCategoriesStore } from "@/stores";
 
 import { mapCategoriesToTree } from "./lib/mapCategoriesToTree.js";
+import { PLACEHOLDER_DATA } from "./model/placeholderData.js";
 
 const categoriesStore = useCategoriesStore();
 
@@ -15,6 +16,10 @@ const reload = async function () {
 };
 
 const mappedCategories = computed(() => {
+    if (categoriesStore.isManyLoading) {
+        return PLACEHOLDER_DATA;
+    }
+
     return mapCategoriesToTree(categoriesStore.listData);
 });
 
@@ -26,7 +31,7 @@ reload();
         <div v-if="true">
             <BaseTree :options="mappedCategories">
                 <template #default="{ node }">
-                    <div class="node-wrapper">
+                    <div class="node-wrapper" :class="{ loading: categoriesStore.isManyLoading }">
                         <IconBars class="icon-bars" />
                         <span class="node-text"> {{ node.text }} </span>
                         <div class="node-actions">
@@ -48,39 +53,57 @@ reload();
 </template>
 
 <style lang="scss" scoped>
+@import "@/assets/skeleton";
+
 .node-wrapper {
     display: flex;
     align-items: center;
     width: 100%;
-}
 
-.node-actions {
-    display: flex;
-    gap: 12px;
-    margin-left: auto;
-}
+    .node-actions {
+        display: flex;
+        gap: 12px;
+        margin-left: auto;
+    }
 
-.node-edit {
-    width: auto;
-    height: 18px;
-    color: var(--c-primary);
-}
+    .node-edit {
+        width: auto;
+        height: 18px;
+        color: var(--c-primary);
+    }
 
-.node-delete {
-    width: auto;
-    height: 16px;
-    color: var(--c-red);
-}
+    .node-delete {
+        width: auto;
+        height: 16px;
+        color: var(--c-red);
+    }
 
-.node-text {
-    font-size: 15px;
-    line-height: 20px;
-}
+    .node-text {
+        font-size: 15px;
+        line-height: 20px;
+    }
 
-.icon-bars {
-    width: 20px;
-    height: auto;
-    margin-right: 14px;
+    .icon-bars {
+        width: 20px;
+        height: auto;
+        margin-right: 14px;
+    }
+
+    &.loading {
+        .node-actions {
+            width: 45px;
+            height: 20px;
+
+            @include skeleton;
+        }
+
+        .node-text {
+            width: 120px;
+            height: 20px;
+
+            @include skeleton;
+        }
+    }
 }
 
 .no-categories {
