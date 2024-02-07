@@ -50,9 +50,5 @@ onMounted(() => {
         width: 8px;
         height: 1px;
     }
-
-    & .tree-node-inner {
-        padding: 10px 0;
-    }
 }
 </style>

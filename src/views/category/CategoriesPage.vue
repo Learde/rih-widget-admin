@@ -1,8 +1,8 @@
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { RouterLink } from "vue-router";
 
-import { BaseTree } from "@/components";
+import { BaseTree, BaseDeleteModal } from "@/components";
 import { IconCategory, IconBars, IconEdit, IconDelete } from "@/icones";
 import { useCategoriesStore } from "@/stores";
 
@@ -15,6 +15,8 @@ const reload = async function () {
     categoriesStore.fetchMany({ page: 1, perPage: 999 });
 };
 
+reload();
+
 const mappedCategories = computed(() => {
     if (categoriesStore.isManyLoading) {
         return PLACEHOLDER_DATA;
@@ -23,12 +25,23 @@ const mappedCategories = computed(() => {
     return mapCategoriesToTree(categoriesStore.listData);
 });
 
-reload();
+const showModal = ref(false);
+const deletingId = ref(null);
+
+const handleDeleting = function (id) {
+    showModal.value = true;
+    deletingId.value = id;
+};
+
+const deleteCategory = async function () {
+    await categoriesStore.deleteOne(deletingId.value);
+    reload();
+};
 </script>
 
 <template>
     <div>
-        <div v-if="true">
+        <div v-if="categoriesStore.isManyLoading || categoriesStore.listData.length > 0">
             <BaseTree :options="mappedCategories">
                 <template #default="{ node }">
                     <div class="node-wrapper" :class="{ loading: categoriesStore.isManyLoading }">
@@ -36,7 +49,7 @@ reload();
                         <span class="node-text"> {{ node.text }} </span>
                         <div class="node-actions">
                             <IconEdit class="node-edit" />
-                            <IconDelete class="node-delete" />
+                            <IconDelete class="node-delete" @click="handleDeleting(node.id)" />
                         </div>
                     </div>
                 </template>
@@ -50,6 +63,11 @@ reload();
             </RouterLink>
         </div>
     </div>
+
+    <BaseDeleteModal v-model="showModal" @accept="deleteCategory" @close="deletingId = null">
+        <template #title> Удаление категории </template>
+        <template #description> Вы уверены, что хотите удалить эту категорию? </template>
+    </BaseDeleteModal>
 </template>
 
 <style lang="scss" scoped>
@@ -59,6 +77,7 @@ reload();
     display: flex;
     align-items: center;
     width: 100%;
+    padding: 10px 0;
 
     .node-actions {
         display: flex;
@@ -70,12 +89,14 @@ reload();
         width: auto;
         height: 18px;
         color: var(--c-primary);
+        cursor: pointer;
     }
 
     .node-delete {
         width: auto;
         height: 16px;
         color: var(--c-red);
+        cursor: pointer;
     }
 
     .node-text {

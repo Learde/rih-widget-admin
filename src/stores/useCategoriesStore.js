@@ -1,5 +1,6 @@
-import { apiCategory } from "@/api";
 import { defineStore } from "pinia";
+
+import { apiCategory } from "@/api";
 import { useEntityStore } from "@/lib";
 
 export const useCategoriesStore = defineStore("categories", () => {
