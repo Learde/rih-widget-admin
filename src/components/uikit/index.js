@@ -8,6 +8,7 @@ export { default as CheckboxWithAdditional } from "./checkbox/CheckboxWithAdditi
 export { default as BaseToggler } from "./toggler/BaseToggler.vue";
 
 export { default as BaseDeleteModal } from "./modal/BaseDeleteModal.vue";
+export { default as BaseLoadingModal } from "./modal/BaseLoadingModal.vue";
 
 export { default as BasePaginate } from "./paginate/BasePaginate.vue";
 

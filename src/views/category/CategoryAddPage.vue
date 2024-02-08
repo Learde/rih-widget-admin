@@ -1,15 +1,16 @@
 <script setup>
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
-import { reactive, computed, onMounted } from "vue";
-import { onBeforeRouteLeave } from "vue-router";
+import { reactive, computed, onMounted, ref } from "vue";
+import { useRouter, onBeforeRouteLeave } from "vue-router";
 
-import { BaseFormGroup, BaseInput } from "@/components";
+import { BaseFormGroup, BaseInput, BaseLoadingModal } from "@/components";
 import { useTrans, useEventBus, useCategoriesStore } from "@/stores";
 
 const trans = useTrans();
 const eventBus = useEventBus();
 const categoriesStore = useCategoriesStore();
+const router = useRouter();
 
 const formData = reactive({
     title: "",
@@ -33,17 +34,27 @@ const handleTitleInput = function () {
     v$.value.formData.title.$touch();
 };
 
+const loadingState = ref("pending");
+
 onMounted(() => {
     eventBus.addEventListener("ready", async () => {
         const isValid = await v$.value.$validate();
 
         if (isValid) {
-            categoriesStore.addOne({
+            loadingState.value = "loading";
+
+            await categoriesStore.addOne({
                 title: formData.title,
                 children: [],
                 discounts: [],
                 prices: [],
             });
+
+            loadingState.value = "success";
+
+            setTimeout(() => {
+                router.push({ name: "Categories" });
+            }, 1500);
         }
     });
 });
@@ -70,4 +81,6 @@ onBeforeRouteLeave(() => {
             </template>
         </BaseFormGroup>
     </div>
+
+    <BaseLoadingModal :state="loadingState" />
 </template>

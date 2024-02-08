@@ -11,3 +11,5 @@ export { default as IconSearch } from "./IconSearch.vue";
 export { default as IconDelete } from "./IconDelete.vue";
 export { default as IconPicture } from "./IconPicture.vue";
 export { default as IconEdit } from "./IconEdit.vue";
+export { default as IconSpinner } from "./IconSpinner.vue";
+export { default as IconDone } from "./IconDone.vue";
