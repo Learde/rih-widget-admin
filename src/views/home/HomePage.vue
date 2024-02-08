@@ -1,4 +1,6 @@
 <script setup>
+import { RouterLink } from "vue-router";
+
 import {
     IconCategory,
     IconChevron,
@@ -7,8 +9,6 @@ import {
     IconRIHLogo,
     IconSettings,
 } from "@/icones";
-
-import { RouterLink } from "vue-router";
 </script>
 
 <template>
@@ -82,7 +82,7 @@ import { RouterLink } from "vue-router";
 }
 
 .icon {
-    // color: var(--c-primary);
-    color: var(--c-gray-2);
+    color: var(--c-primary);
+    // color: var(--c-gray-2);
 }
 </style>
