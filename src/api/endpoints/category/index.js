@@ -12,7 +12,7 @@ export const apiCategory = {
     async addOne(category) {
         return await saveCategories([category], []);
     },
-    async editMany(categories) {
+    async editMany(_, categories) {
         return await saveCategories(categories, []);
     },
 };

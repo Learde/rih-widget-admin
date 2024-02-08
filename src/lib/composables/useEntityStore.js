@@ -37,6 +37,8 @@ export const useEntityStore = function ({
             listData.value = fetchResponse.data;
             meta.value = fetchResponse.meta;
             permissions.value = fetchResponse.permissions;
+
+            return listData.value;
         } finally {
             isManyLoading.value = false;
             prevPaginationParams.value = paginationParams;

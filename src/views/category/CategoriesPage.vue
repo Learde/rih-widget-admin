@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from "vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 
 import { BaseTree, BaseDeleteModal } from "@/components";
 import { IconCategory, IconBars, IconEdit, IconDelete } from "@/icones";
@@ -10,6 +10,7 @@ import { mapCategoriesToTree } from "./lib/mapCategoriesToTree.js";
 import { PLACEHOLDER_DATA } from "./model/placeholderData.js";
 
 const categoriesStore = useCategoriesStore();
+const router = useRouter();
 
 const reload = async function () {
     categoriesStore.fetchMany({ page: 1, perPage: 999 });
@@ -27,6 +28,10 @@ const mappedCategories = computed(() => {
 
 const showModal = ref(false);
 const deletingId = ref(null);
+
+const handleEditing = function (id) {
+    router.push({ name: "EditCategory", params: { id } });
+};
 
 const handleDeleting = function (id) {
     showModal.value = true;
@@ -48,7 +53,7 @@ const deleteCategory = async function () {
                         <IconBars class="icon-bars" />
                         <span class="node-text"> {{ node.text }} </span>
                         <div class="node-actions">
-                            <IconEdit class="node-edit" />
+                            <IconEdit class="node-edit" @click="handleEditing(node.id)" />
                             <IconDelete class="node-delete" @click="handleDeleting(node.id)" />
                         </div>
                     </div>

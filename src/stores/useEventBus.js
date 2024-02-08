@@ -9,6 +9,8 @@ export const useEventBus = defineStore("eventBus", () => {
 
         if (!handlersList) {
             handlers.value[event] = [handler];
+        } else {
+            handlersList.push(handler);
         }
     };
 
@@ -28,5 +30,5 @@ export const useEventBus = defineStore("eventBus", () => {
         }
     };
 
-    return { addEventListener, clearEventListeners, emit };
+    return { addEventListener, clearEventListeners, emit, handlers };
 });

@@ -51,6 +51,16 @@ const router = createRouter({
             },
             component: () => import("@/views/category/CategoryAddPage.vue"),
         },
+        {
+            path: "/categories/edit/:id",
+            name: "EditCategory",
+            meta: {
+                title: "Редактировать категорию",
+                hasReadyButton: true,
+            },
+            props: true,
+            component: () => import("@/views/category/CategoryEditPage.vue"),
+        },
     ],
 });
 
