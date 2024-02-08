@@ -1,19 +1,25 @@
 <script setup>
 import { useVModel } from "@vueuse/core";
 
-const props = defineProps({ modelValue: { type: Boolean, default: false } });
+const props = defineProps({
+    modelValue: { type: Boolean, default: false },
+    shouldEmitCloseAfterAccept: { type: Boolean, default: true },
+});
 const emit = defineEmits(["update:modelValue", "accept", "close"]);
 
 const modelValue = useVModel(props, "modelValue", emit);
 
-const close = function () {
+const close = function (shouldEmit = true) {
     modelValue.value = false;
-    emit("close");
+
+    if (shouldEmit) {
+        emit("close");
+    }
 };
 
 const accept = function () {
     emit("accept");
-    close();
+    close(props.shouldEmitCloseAfterAccept);
 };
 </script>
 
@@ -23,8 +29,12 @@ const accept = function () {
             <h3 class="title"><slot name="title" /></h3>
             <p class="description"><slot name="description" /></p>
             <div class="actions">
-                <button class="button cancel" @click="close">Отмена</button>
-                <button class="button delete" @click="accept">Удалить</button>
+                <button class="button cancel" @click="close">
+                    <slot name="cancel"> Отмена </slot>
+                </button>
+                <button class="button delete" @click="accept">
+                    <slot name="accept"> Удалить </slot>
+                </button>
             </div>
         </div>
     </div>

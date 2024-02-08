@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from "vue";
-import { RouterLink, useRouter } from "vue-router";
+import { RouterLink, useRouter, onBeforeRouteLeave } from "vue-router";
 
 import { BaseTree, BaseDeleteModal, BaseButton } from "@/components";
 import { IconCategory, IconBars, IconEdit, IconDelete } from "@/icones";
@@ -52,6 +52,22 @@ const deleteCategory = async function () {
     await categoriesStore.deleteOne(deletingId.value);
     reload();
 };
+
+const showAlert = ref(false);
+const toRoute = ref(null);
+
+onBeforeRouteLeave((to) => {
+    if (!toRoute.value && wasChanged.value) {
+        showAlert.value = true;
+        toRoute.value = to;
+
+        return false;
+    }
+});
+
+const continueRouting = function () {
+    router.push({ name: toRoute.value.name });
+};
 </script>
 
 <template>
@@ -89,6 +105,19 @@ const deleteCategory = async function () {
     <BaseDeleteModal v-model="showModal" @accept="deleteCategory" @close="deletingId = null">
         <template #title> Удаление категории </template>
         <template #description> Вы уверены, что хотите удалить эту категорию? </template>
+    </BaseDeleteModal>
+
+    <BaseDeleteModal
+        v-model="showAlert"
+        :should-emit-close-after-accept="false"
+        @accept="continueRouting"
+        @close="toRoute = null"
+    >
+        <template #title> Есть несохраненные изменения </template>
+        <template #description>
+            Вы уверены, что хотите покинуть эту страницу? Изменения будут утеряны
+        </template>
+        <template #accept> Перейти </template>
     </BaseDeleteModal>
 </template>
 
