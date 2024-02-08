@@ -1,6 +1,6 @@
 <script setup>
-import { IconDelete, IconSettings } from "@/icones";
 import { BaseBadge } from "@/components";
+import { IconDelete, IconSettings } from "@/icones";
 
 defineProps({
     inventory: {
@@ -81,22 +81,27 @@ defineEmits(["delete", "edit"]);
     }
 
     & .actions {
+        position: relative;
+        left: 10px;
         display: flex;
-        gap: 20px;
         align-items: center;
         margin-left: auto;
     }
 
     & .edit {
+        box-sizing: content-box;
         width: 19px;
         height: auto;
+        padding: 10px;
         color: var(--c-primary);
         cursor: pointer;
     }
 
     & .delete {
+        box-sizing: content-box;
         width: 17px;
         height: auto;
+        padding: 10px;
         color: var(--c-red);
         cursor: pointer;
     }
@@ -118,6 +123,7 @@ defineEmits(["delete", "edit"]);
         }
 
         & .actions {
+            left: 0;
             width: 56px;
             height: 20px;
         }

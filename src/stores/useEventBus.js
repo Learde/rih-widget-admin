@@ -4,7 +4,7 @@ import { ref } from "vue";
 export const useEventBus = defineStore("eventBus", () => {
     const handlers = ref({});
 
-    const addHandler = function (event, handler) {
+    const addEventListener = function (event, handler) {
         const handlersList = handlers.value[event];
 
         if (!handlersList) {
@@ -12,7 +12,7 @@ export const useEventBus = defineStore("eventBus", () => {
         }
     };
 
-    const clearHandlers = function (event) {
+    const clearEventListeners = function (event) {
         if (handlers.value[event]) {
             handlers.value[event] = [];
         }
@@ -28,5 +28,5 @@ export const useEventBus = defineStore("eventBus", () => {
         }
     };
 
-    return { addHandler, clearHandlers, emit };
+    return { addEventListener, clearEventListeners, emit };
 });

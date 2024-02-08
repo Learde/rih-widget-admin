@@ -74,27 +74,35 @@ const deleteCategory = async function () {
 @import "@/assets/skeleton";
 
 .node-wrapper {
+    position: relative;
     display: flex;
     align-items: center;
     width: 100%;
     padding: 10px 0;
 
     .node-actions {
+        position: absolute;
+        top: 50%;
+        right: -10px;
         display: flex;
-        gap: 12px;
         margin-left: auto;
+        transform: translateY(-50%);
     }
 
     .node-edit {
+        box-sizing: content-box;
         width: auto;
         height: 18px;
+        padding: 10px;
         color: var(--c-primary);
         cursor: pointer;
     }
 
     .node-delete {
+        box-sizing: content-box;
         width: auto;
         height: 16px;
+        padding: 10px;
         color: var(--c-red);
         cursor: pointer;
     }
@@ -112,6 +120,7 @@ const deleteCategory = async function () {
 
     &.loading {
         .node-actions {
+            right: 0;
             width: 45px;
             height: 20px;
 

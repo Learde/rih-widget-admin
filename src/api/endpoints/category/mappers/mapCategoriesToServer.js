@@ -2,7 +2,7 @@ import { getDataMapper, mapField } from "@/lib";
 
 function CategoriesMeta() {
     this.id = mapField("id", Number);
-    this.title = mapField("text");
+    this.title = mapField("title");
     this.sum_deposit = mapField("cashDeposit", Number);
     this.discounts = mapField("discounts", Number);
     this.prices = mapField("tariffs", Number);
