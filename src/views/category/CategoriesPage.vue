@@ -2,11 +2,12 @@
 import { computed, ref } from "vue";
 import { RouterLink, useRouter } from "vue-router";
 
-import { BaseTree, BaseDeleteModal } from "@/components";
+import { BaseTree, BaseDeleteModal, BaseButton } from "@/components";
 import { IconCategory, IconBars, IconEdit, IconDelete } from "@/icones";
 import { useCategoriesStore } from "@/stores";
 
 import { mapCategoriesToTree } from "./lib/mapCategoriesToTree.js";
+import { mapTreeToCategories } from "./lib/mapTreeToCategories.js";
 import { PLACEHOLDER_DATA } from "./model/placeholderData.js";
 
 const categoriesStore = useCategoriesStore();
@@ -28,6 +29,15 @@ const mappedCategories = computed(() => {
 
 const showModal = ref(false);
 const deletingId = ref(null);
+const wasChanged = ref(false);
+const treeRef = ref(null);
+
+const handleSaving = function () {
+    const data = treeRef.value.getData();
+
+    wasChanged.value = false;
+    categoriesStore.editMany(mapTreeToCategories(data));
+};
 
 const handleEditing = function (id) {
     router.push({ name: "EditCategory", params: { id } });
@@ -47,7 +57,11 @@ const deleteCategory = async function () {
 <template>
     <div>
         <div v-if="categoriesStore.isManyLoading || categoriesStore.listData.length > 0">
-            <BaseTree :options="mappedCategories">
+            <BaseTree
+                :options="mappedCategories"
+                @change="wasChanged = true"
+                v-model:tree-ref="treeRef"
+            >
                 <template #default="{ node }">
                     <div class="node-wrapper" :class="{ loading: categoriesStore.isManyLoading }">
                         <IconBars class="icon-bars" />
@@ -59,6 +73,9 @@ const deleteCategory = async function () {
                     </div>
                 </template>
             </BaseTree>
+            <BaseButton v-if="wasChanged" class="save-button" @click="handleSaving">
+                Сохранить изменения
+            </BaseButton>
         </div>
         <div v-else class="no-categories">
             <IconCategory class="no-categories-icon" />
@@ -77,6 +94,10 @@ const deleteCategory = async function () {
 
 <style lang="scss" scoped>
 @import "@/assets/skeleton";
+
+.save-button {
+    width: 100%;
+}
 
 .node-wrapper {
     position: relative;

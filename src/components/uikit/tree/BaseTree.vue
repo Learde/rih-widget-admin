@@ -29,6 +29,7 @@ onMounted(() => {
         tree-line
         :tree-line-offset="8"
         :indent="25"
+        @change="$emit('change')"
     >
         <template #default="{ node, stat }">
             <slot name="default" :node="node" :stat="stat" />
@@ -39,7 +40,7 @@ onMounted(() => {
 <style lang="scss">
 .base-tree {
     min-height: calc(
-        100vh - var(--app-padding-y) * 2 - var(--app-header-height) - var(--app-header-mb)
+        100vh - var(--app-padding-y) * 2 - var(--app-header-height) - var(--app-header-mb) - 45px
     );
 
     & .tree-line {
