@@ -22,7 +22,7 @@ import {
             <div class="icon-wrapper"><IconSettings class="icon" /></div>
             <span>Настройка витрины</span> <IconChevron class="chevron" />
         </RouterLink>
-        <RouterLink class="link" :to="{ name: 'Settings' }">
+        <RouterLink class="link" :to="{ name: 'InventoryPrices' }">
             <div class="icon-wrapper"><IconPrice class="icon" /></div>
             <span>Настройка тарифов</span> <IconChevron class="chevron" />
         </RouterLink>
