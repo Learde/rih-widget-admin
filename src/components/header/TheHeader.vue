@@ -17,6 +17,10 @@ const props = defineProps({
         type: Function,
         default: null,
     },
+    backRouteName: {
+        type: String,
+        default: null,
+    },
     hasReadyButton: {
         type: Boolean,
         default: false,
@@ -29,6 +33,10 @@ const eventBus = useEventBus();
 const handleBack = function () {
     if (props.backHandler) {
         return props.backHandler();
+    }
+
+    if (props.backRouteName) {
+        return router.push({ name: props.backRouteName });
     }
 
     router.go(-1);

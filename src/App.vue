@@ -1,8 +1,9 @@
 <script setup>
-import { RouterView, useRoute } from "vue-router";
-import { TheHeader } from "@/components";
 import { computed } from "vue";
+import { RouterView, useRoute } from "vue-router";
+
 import { setToken } from "@/api";
+import { TheHeader } from "@/components";
 
 const route = useRoute();
 
@@ -19,6 +20,7 @@ setToken("oFydZpjyTYlzTK8M8ZVDDENlCNLCxxy7");
         :title="route.meta.title"
         :add-route-name="route.meta?.addRouteName"
         :has-ready-button="route.meta?.hasReadyButton"
+        :back-route-name="route.meta?.backRouteName"
     />
     <RouterView />
 </template>

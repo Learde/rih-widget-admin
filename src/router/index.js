@@ -13,6 +13,7 @@ const router = createRouter({
             name: "Settings",
             meta: {
                 title: "Настройки",
+                backRouteName: "Home",
             },
             component: () => import("@/views/settings/SettingsPage.vue"),
         },
@@ -22,6 +23,7 @@ const router = createRouter({
             meta: {
                 title: "Инвентарь",
                 addRouteName: "AddInventory",
+                backRouteName: "Home",
             },
             component: () => import("@/views/inventory/InventoriesPage.vue"),
         },
@@ -30,6 +32,7 @@ const router = createRouter({
             name: "AddInventory",
             meta: {
                 title: "Добавить инвентарь",
+                backRouteName: "Inventories",
             },
             component: () => import("@/views/inventory/InventoryAddPage.vue"),
         },
@@ -39,6 +42,7 @@ const router = createRouter({
             meta: {
                 title: "Категории",
                 addRouteName: "AddCategory",
+                backRouteName: "Home",
             },
             component: () => import("@/views/category/CategoriesPage.vue"),
         },
@@ -48,6 +52,7 @@ const router = createRouter({
             meta: {
                 title: "Добавить категорию",
                 hasReadyButton: true,
+                backRouteName: "Categories",
             },
             component: () => import("@/views/category/CategoryAddPage.vue"),
         },
@@ -57,6 +62,7 @@ const router = createRouter({
             meta: {
                 title: "Редактировать категорию",
                 hasReadyButton: true,
+                backRouteName: "Categories",
             },
             props: true,
             component: () => import("@/views/category/CategoryEditPage.vue"),
@@ -67,6 +73,7 @@ const router = createRouter({
             meta: {
                 title: "Пункты проката",
                 addRouteName: "AddPoint",
+                backRouteName: "Home",
             },
             component: () => import("@/views/point/PointsPage.vue"),
         },
@@ -76,6 +83,7 @@ const router = createRouter({
             meta: {
                 title: "Добавить пункт",
                 hasReadyButton: true,
+                backRouteName: "Points",
             },
             component: () => import("@/views/point/PointEditPage.vue"),
         },
@@ -85,6 +93,7 @@ const router = createRouter({
             meta: {
                 title: "Редактировать пункт",
                 hasReadyButton: true,
+                backRouteName: "Points",
             },
             props: true,
             component: () => import("@/views/point/PointEditPage.vue"),
