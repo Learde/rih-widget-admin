@@ -8,6 +8,7 @@ import {
     IconPrice,
     IconRIHLogo,
     IconSettings,
+    IconLocation,
 } from "@/icones";
 </script>
 
@@ -28,6 +29,10 @@ import {
         <RouterLink class="link" :to="{ name: 'Categories' }">
             <div class="icon-wrapper"><IconCategory class="icon" /></div>
             <span>Редактор категорий инвентаря</span> <IconChevron class="chevron" />
+        </RouterLink>
+        <RouterLink class="link" :to="{ name: 'Points' }">
+            <div class="icon-wrapper"><IconLocation class="icon" /></div>
+            <span>Пункты проката</span> <IconChevron class="chevron" />
         </RouterLink>
         <a class="link" href="https://lk.rentinhand.ru">
             <div class="icon-wrapper"><IconRIHLogo class="icon" /></div>
@@ -83,6 +88,7 @@ import {
 
 .icon {
     color: var(--c-primary);
+
     // color: var(--c-gray-2);
 }
 </style>

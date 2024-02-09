@@ -61,6 +61,34 @@ const router = createRouter({
             props: true,
             component: () => import("@/views/category/CategoryEditPage.vue"),
         },
+        {
+            path: "/points",
+            name: "Points",
+            meta: {
+                title: "Пункты проката",
+                addRouteName: "AddPoint",
+            },
+            component: () => import("@/views/point/PointsPage.vue"),
+        },
+        {
+            path: "/points/add",
+            name: "AddPoint",
+            meta: {
+                title: "Добавить пункт",
+                hasReadyButton: true,
+            },
+            component: () => import("@/views/point/PointEditPage.vue"),
+        },
+        {
+            path: "/points/edit/:id",
+            name: "EditPoint",
+            meta: {
+                title: "Редактировать пункт",
+                hasReadyButton: true,
+            },
+            props: true,
+            component: () => import("@/views/point/PointEditPage.vue"),
+        },
     ],
 });
 
