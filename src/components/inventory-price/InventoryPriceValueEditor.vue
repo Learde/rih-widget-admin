@@ -2,31 +2,18 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { useVModels } from "@vueuse/core";
-import { isArray } from "lodash";
 
 import { BaseSquareInput, BaseFormGroup, BaseInput } from "@/components";
 import { IconHelp, IconDelete } from "@/icones";
 import { useTrans } from "@/stores";
 
 const props = defineProps({
-    days: {
-        type: Number,
+    period: {
+        type: Object,
         required: true,
     },
-    hours: {
-        type: Number,
-        required: true,
-    },
-    minutes: {
-        type: Number,
-        required: true,
-    },
-    moreThenDays: {
-        type: Number,
-        required: true,
-    },
-    moreThenHours: {
-        type: Number,
+    moreThen: {
+        type: Object,
         required: true,
     },
     price: {
@@ -34,49 +21,42 @@ const props = defineProps({
         required: true,
     },
 });
-const emit = defineEmits([
-    "update:days",
-    "update:hours",
-    "update:minutes",
-    "update:moreThenDays",
-    "update:moreThenHours",
-    "update:price",
-    "delete",
-]);
+const emit = defineEmits(["update:period", "update:moreThen", "update:price", "delete"]);
 
-const { days, hours, minutes, moreThenDays, moreThenHours, price } = useVModels(props, emit);
+const { period, moreThen, price } = useVModels(props, emit);
 const trans = useTrans();
 
 const rules = {
-    days: { required },
-    hours: { required },
-    minutes: { required },
+    period: {
+        days: { required },
+        hours: { required },
+        minutes: { required },
+    },
     price: { required },
 };
 
-const v$ = useVuelidate(rules, { days, hours, minutes, price });
+const v$ = useVuelidate(rules, { period, price });
 
-const isFieldValid = function (fieldName) {
-    return !v$.value[fieldName].$error;
+const getValidationObject = function (fieldNames) {
+    let v = v$.value;
+
+    fieldNames.forEach((fieldName) => {
+        v = v[fieldName];
+    });
+
+    return v;
 };
 
-const getFieldErrors = function (fieldName) {
-    return v$.value[fieldName].$errors;
-};
-const getFieldsErrors = function (fieldsName) {
-    return fieldsName.reduce((acc, fieldName) => {
-        const errors = v$.value[fieldName].$errors;
-
-        if (isArray(errors) && errors.length > 0) {
-            acc.push(...errors);
-        }
-
-        return acc;
-    }, []);
+const isFieldValid = function (...fieldNames) {
+    return !getValidationObject(fieldNames).$error;
 };
 
-const handleFieldInput = function (fieldName) {
-    v$.value[fieldName].$touch();
+const getFieldErrors = function (...fieldNames) {
+    return getValidationObject(fieldNames).$errors;
+};
+
+const handleFieldInput = function (...fieldNames) {
+    getValidationObject(fieldNames).$touch();
 };
 </script>
 
@@ -86,35 +66,31 @@ const handleFieldInput = function (fieldName) {
             <div class="input-period">
                 <BaseSquareInput
                     min="0"
-                    v-model="days"
-                    :is-error="!isFieldValid('days')"
-                    @input="handleFieldInput('days')"
+                    v-model="period.days"
+                    :is-error="!isFieldValid('period', 'days')"
+                    @input="handleFieldInput('period', 'days')"
                 >
                     <template #label> Дней * </template>
                 </BaseSquareInput>
                 <BaseSquareInput
                     min="0"
-                    v-model="hours"
-                    :is-error="!isFieldValid('hours')"
-                    @input="handleFieldInput('hours')"
+                    v-model="period.hours"
+                    :is-error="!isFieldValid('period', 'hours')"
+                    @input="handleFieldInput('period', 'hours')"
                 >
                     <template #label> Часов * </template>
                 </BaseSquareInput>
                 <BaseSquareInput
                     min="0"
-                    v-model="minutes"
-                    :is-error="!isFieldValid('minutes')"
-                    @input="handleFieldInput('minutes')"
+                    v-model="period.minutes"
+                    :is-error="!isFieldValid('period', 'minutes')"
+                    @input="handleFieldInput('period', 'minutes')"
                 >
                     <template #label> Минут * </template>
                 </BaseSquareInput>
             </div>
             <span class="error-text">
-                {{
-                    trans.validationMessages[
-                        getFieldsErrors(["days", "hours", "minutes"])?.at(0)?.$validator
-                    ]
-                }}
+                {{ trans.validationMessages[getFieldErrors("period")?.at(0)?.$validator] }}
             </span>
         </div>
         <div class="more-then">
@@ -123,10 +99,10 @@ const handleFieldInput = function (fieldName) {
                 <IconHelp class="more-then-icon" />
             </div>
             <div class="more-then-period">
-                <BaseSquareInput min="0" v-model="moreThenDays">
+                <BaseSquareInput min="0" v-model="moreThen.days">
                     <template #label> Дней </template>
                 </BaseSquareInput>
-                <BaseSquareInput min="0" v-model="moreThenHours">
+                <BaseSquareInput min="0" v-model="moreThen.hours">
                     <template #label> Часов </template>
                 </BaseSquareInput>
             </div>

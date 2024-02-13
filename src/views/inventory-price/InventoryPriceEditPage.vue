@@ -1,7 +1,7 @@
 <script setup>
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
-import { clone } from "lodash";
+import { cloneDeep } from "lodash";
 import { reactive, computed, onMounted, ref } from "vue";
 import { useRouter, onBeforeRouteLeave } from "vue-router";
 
@@ -31,18 +31,22 @@ const formData = reactive({
 });
 const PRICE_TEMPLATE = {
     key: 0,
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    moreThenDays: 0,
-    moreThenHours: 0,
+    period: {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+    },
+    moreThen: {
+        days: 0,
+        hours: 0,
+    },
     price: 0,
 };
-const prices = ref([clone(PRICE_TEMPLATE)]);
+const prices = ref([cloneDeep(PRICE_TEMPLATE)]);
 
 const addPrice = function () {
     PRICE_TEMPLATE.key++;
-    prices.value.push(clone(PRICE_TEMPLATE));
+    prices.value.push(cloneDeep(PRICE_TEMPLATE));
 };
 
 const deletePrice = function (price) {
@@ -77,6 +81,7 @@ onMounted(async () => {
         loadingState.value = "pending";
 
         formData.title = inventoryPrice.title;
+        prices.value = inventoryPrice.values;
     }
 
     eventBus.addEventListener("ready", async () => {
@@ -89,10 +94,12 @@ onMounted(async () => {
                 await inventoryPricesStore.editOne(props.id, {
                     id: props.id,
                     title: formData.title,
+                    values: prices.value,
                 });
             } else {
                 await inventoryPricesStore.addOne({
                     title: formData.title,
+                    values: prices.value,
                 });
             }
 
@@ -130,11 +137,8 @@ onBeforeRouteLeave(() => {
         <h3>Расценки</h3>
         <template v-for="price in prices" :key="price.id ?? price.key">
             <InventoryPriceValueEditor
-                v-model:days="price.days"
-                v-model:hours="price.hours"
-                v-model:minutes="price.minutes"
-                v-model:more-then-days="price.moreThenDays"
-                v-model:more-then-hours="price.moreThenHours"
+                v-model:period="price.period"
+                v-model:more-then="price.moreThen"
                 v-model:price="price.price"
                 @delete="deletePrice(price)"
             />

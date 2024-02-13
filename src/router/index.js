@@ -126,6 +126,7 @@ const router = createRouter({
                 hasReadyButton: true,
                 backRouteName: "InventoryPrices",
             },
+            props: true,
             component: () => import("@/views/inventory-price/InventoryPriceEditPage.vue"),
         },
     ],
