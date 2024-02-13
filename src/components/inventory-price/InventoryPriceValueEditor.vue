@@ -2,9 +2,11 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { useVModels } from "@vueuse/core";
+import { isArray } from "lodash";
 
 import { BaseSquareInput, BaseFormGroup, BaseInput } from "@/components";
 import { IconHelp, IconDelete } from "@/icones";
+import { useTrans } from "@/stores";
 
 const props = defineProps({
     days: {
@@ -43,6 +45,7 @@ const emit = defineEmits([
 ]);
 
 const { days, hours, minutes, moreThenDays, moreThenHours, price } = useVModels(props, emit);
+const trans = useTrans();
 
 const rules = {
     days: { required },
@@ -52,20 +55,67 @@ const rules = {
 };
 
 const v$ = useVuelidate(rules, { days, hours, minutes, price });
+
+const isFieldValid = function (fieldName) {
+    return !v$.value[fieldName].$error;
+};
+
+const getFieldErrors = function (fieldName) {
+    return v$.value[fieldName].$errors;
+};
+const getFieldsErrors = function (fieldsName) {
+    return fieldsName.reduce((acc, fieldName) => {
+        const errors = v$.value[fieldName].$errors;
+
+        if (isArray(errors) && errors.length > 0) {
+            acc.push(...errors);
+        }
+
+        return acc;
+    }, []);
+};
+
+const handleFieldInput = function (fieldName) {
+    v$.value[fieldName].$touch();
+};
 </script>
 
 <template>
     <div class="price-value">
-        <div class="input-period">
-            <BaseSquareInput min="0" v-model="days">
-                <template #label> Дней * </template>
-            </BaseSquareInput>
-            <BaseSquareInput min="0" v-model="hours">
-                <template #label> Часов * </template>
-            </BaseSquareInput>
-            <BaseSquareInput min="0" v-model="minutes">
-                <template #label> Минут * </template>
-            </BaseSquareInput>
+        <div class="input-period-wrapper">
+            <div class="input-period">
+                <BaseSquareInput
+                    min="0"
+                    v-model="days"
+                    :is-error="!isFieldValid('days')"
+                    @input="handleFieldInput('days')"
+                >
+                    <template #label> Дней * </template>
+                </BaseSquareInput>
+                <BaseSquareInput
+                    min="0"
+                    v-model="hours"
+                    :is-error="!isFieldValid('hours')"
+                    @input="handleFieldInput('hours')"
+                >
+                    <template #label> Часов * </template>
+                </BaseSquareInput>
+                <BaseSquareInput
+                    min="0"
+                    v-model="minutes"
+                    :is-error="!isFieldValid('minutes')"
+                    @input="handleFieldInput('minutes')"
+                >
+                    <template #label> Минут * </template>
+                </BaseSquareInput>
+            </div>
+            <span class="error-text">
+                {{
+                    trans.validationMessages[
+                        getFieldsErrors(["days", "hours", "minutes"])?.at(0)?.$validator
+                    ]
+                }}
+            </span>
         </div>
         <div class="more-then">
             <div class="more-then-title">
@@ -82,17 +132,22 @@ const v$ = useVuelidate(rules, { days, hours, minutes, price });
             </div>
         </div>
         <div class="input-price">
-            <BaseFormGroup>
+            <BaseFormGroup :is-error="!isFieldValid('price')">
                 <template #label> Цена * </template>
                 <template #content>
                     <div class="input-price-wrapper">
                         <BaseInput
                             class="input-price-input"
                             placeholder="Введите цену"
+                            @input="handleFieldInput('price')"
+                            :is-error="!isFieldValid('price')"
                             v-model="price"
                         />
                         <IconDelete class="price-value-delete" @click="$emit('delete')" />
                     </div>
+                </template>
+                <template #error-text>
+                    {{ trans.validationMessages[getFieldErrors("price")?.at(0)?.$validator] }}
                 </template>
             </BaseFormGroup>
         </div>
@@ -101,11 +156,14 @@ const v$ = useVuelidate(rules, { days, hours, minutes, price });
 
 <style lang="scss" scoped>
 .price-value {
+    & .input-period-wrapper {
+        padding: 12px 0;
+    }
+
     & .input-period {
         display: flex;
         flex-wrap: wrap;
         gap: 18px;
-        padding: 12px 0;
     }
 
     & .more-then {
@@ -154,6 +212,14 @@ const v$ = useVuelidate(rules, { days, hours, minutes, price });
         padding: 12.5px 0 12.5px 20px;
         color: var(--c-red);
         cursor: pointer;
+    }
+
+    & .error-text {
+        display: block;
+        margin-top: 4px;
+        font-size: 12px;
+        line-height: 16px;
+        color: var(--c-red);
     }
 }
 </style>
