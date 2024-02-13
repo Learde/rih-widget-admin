@@ -116,6 +116,17 @@ const router = createRouter({
                 hasReadyButton: true,
                 backRouteName: "InventoryPrices",
             },
+            component: () => import("@/views/inventory-price/InventoryPriceEditPage.vue"),
+        },
+        {
+            path: "/inventory-prices/edit/:id",
+            name: "EditInventoryPrice",
+            meta: {
+                title: "Редактировать тариф",
+                hasReadyButton: true,
+                backRouteName: "InventoryPrices",
+            },
+            component: () => import("@/views/inventory-price/InventoryPriceEditPage.vue"),
         },
     ],
 });

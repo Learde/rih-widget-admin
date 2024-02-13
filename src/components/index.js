@@ -3,6 +3,7 @@ export { default as TheHeader } from "./header/TheHeader.vue";
 export { default as InventoryCard } from "./inventory/InventoryCard.vue";
 
 export { default as InventoryPriceCard } from "./inventory-price/InventoryPriceCard.vue";
+export { default as InventoryPriceValueEditor } from "./inventory-price/InventoryPriceValueEditor.vue";
 
 export { default as PointCard } from "./point/PointCard.vue";
 

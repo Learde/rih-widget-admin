@@ -1,8 +1,20 @@
-<script setup></script>
+<script setup>
+import { useVModel } from "@vueuse/core";
+
+const props = defineProps({
+    modelValue: {
+        type: null,
+        required: true,
+    },
+});
+const emit = defineEmits(["update:modelValue"]);
+
+const modelValue = useVModel(props, "modelValue", emit);
+</script>
 
 <template>
     <label class="wrapper">
-        <input class="input" />
+        <input class="input" type="number" v-model="modelValue" />
         <span class="label"><slot name="label" /></span>
     </label>
 </template>
@@ -23,9 +35,11 @@
 .input {
     width: 50px;
     height: 45px;
+    margin: 0;
     font-size: 12px;
     line-height: 20px;
     text-align: center;
+    appearance: textfield;
     background: var(--c-gray-4);
     border: 1px solid rgb(0 0 0 / 12%);
     border-radius: 10px;

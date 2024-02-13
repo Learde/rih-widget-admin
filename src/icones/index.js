@@ -14,3 +14,4 @@ export { default as IconEdit } from "./IconEdit.vue";
 export { default as IconSpinner } from "./IconSpinner.vue";
 export { default as IconDone } from "./IconDone.vue";
 export { default as IconLocation } from "./IconLocation.vue";
+export { default as IconHelp } from "./IconHelp.vue";
