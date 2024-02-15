@@ -1,5 +1,6 @@
 <script setup>
 import { BaseSelectMenu } from "@/components";
+import { IconCategory } from "@/icones";
 import { useCategoriesStore } from "@/stores";
 
 import SelectCategoryItem from "./SelectCategoryItem.vue";
@@ -30,7 +31,9 @@ const reload = function () {
         <template #label> Категория </template>
         <template #modal-content>
             <div class="select-category-content">
-                <template v-if="!categoriesStore.isManyLoading">
+                <template
+                    v-if="!categoriesStore.isManyLoading && categoriesStore.listData.length > 0"
+                >
                     <SelectCategoryItem
                         v-for="(category, index) in categoriesStore.listData"
                         :key="category.id"
@@ -39,6 +42,22 @@ const reload = function () {
                         :active-id="modelValue?.id"
                         @click="$emit('update:modelValue', $event)"
                     />
+                </template>
+                <template
+                    v-else-if="
+                        !categoriesStore.isManyLoading && categoriesStore.listData.length === 0
+                    "
+                >
+                    <div class="no-categories">
+                        <IconCategory class="no-categories-icon" />
+                        <span class="no-categories-text"> Нет добавленных категорий </span>
+                        <RouterLink
+                            class="add-category"
+                            :to="{ name: 'AddCategory', query: { backRouteName: 'AddInventory' } }"
+                        >
+                            Добавить категорию
+                        </RouterLink>
+                    </div>
                 </template>
                 <template v-else>
                     <SelectCategoryItem
@@ -66,6 +85,41 @@ const reload = function () {
 
     &:deep(hr:last-child) {
         display: none;
+    }
+
+    .no-categories {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 130px;
+
+        &.mt-small {
+            margin-top: 50px;
+        }
+    }
+
+    .no-categories-icon {
+        width: 45px;
+        height: auto;
+        margin-bottom: 12px;
+        color: var(--c-gray-7);
+    }
+
+    .no-categories-text {
+        display: inline-block;
+        width: 250px;
+        margin-bottom: 24px;
+        font-size: 18px;
+        line-height: 24px;
+        color: var(--c-gray-7);
+        text-align: center;
+    }
+
+    .add-category {
+        font-size: 15px;
+        line-height: 20px;
+        color: var(--c-primary);
     }
 }
 </style>

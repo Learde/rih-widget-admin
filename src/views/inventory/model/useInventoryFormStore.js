@@ -1,8 +1,8 @@
-import { computed, reactive } from "vue";
-import { defineStore } from "pinia";
-import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 import { clone } from "lodash";
+import { defineStore } from "pinia";
+import { computed, reactive } from "vue";
 
 const INVENTORY_FORM_TEMPLATE = {
     title: "",

@@ -1,15 +1,24 @@
 <script setup>
-defineProps({
+import { useVModel } from "@vueuse/core";
+
+const props = defineProps({
     placeholder: {
         type: String,
         default: "",
     },
+    modelValue: {
+        type: String,
+        default: "",
+    },
 });
+const emit = defineEmits(["update:modelValue"]);
+
+const value = useVModel(props, "modelValue", emit);
 </script>
 
 <template>
     <div class="wrapper">
-        <textarea class="input" :placeholder="placeholder" />
+        <textarea class="input" :placeholder="placeholder" v-model="value" />
     </div>
 </template>
 

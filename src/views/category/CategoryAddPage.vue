@@ -2,7 +2,7 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { reactive, computed, onMounted, ref } from "vue";
-import { useRouter, onBeforeRouteLeave } from "vue-router";
+import { useRouter, useRoute, onBeforeRouteLeave } from "vue-router";
 
 import { BaseFormGroup, BaseInput, BaseLoadingModal } from "@/components";
 import { useTrans, useEventBus, useCategoriesStore } from "@/stores";
@@ -11,6 +11,7 @@ const trans = useTrans();
 const eventBus = useEventBus();
 const categoriesStore = useCategoriesStore();
 const router = useRouter();
+const route = useRoute();
 
 const formData = reactive({
     title: "",
@@ -53,7 +54,13 @@ onMounted(() => {
             loadingState.value = "success";
 
             setTimeout(() => {
-                router.push({ name: "Categories" });
+                const query = {};
+
+                if (route.query.backRouteName) {
+                    query.noReset = true;
+                }
+
+                router.push({ name: route.query.backRouteName || "Categories", query });
             }, 1500);
         }
     });

@@ -1,4 +1,7 @@
 <script setup>
+import { onMounted } from "vue";
+import { useRoute } from "vue-router";
+
 import {
     BaseButton,
     BaseFormGroup,
@@ -15,6 +18,13 @@ import { useInventoryFormStore } from "./model/useInventoryFormStore.js";
 
 const trans = useTrans();
 const inventoryForm = useInventoryFormStore();
+const route = useRoute();
+
+onMounted(() => {
+    if (!route.query.noReset) {
+        inventoryForm.$reset();
+    }
+});
 </script>
 
 <template>

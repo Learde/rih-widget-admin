@@ -96,7 +96,7 @@ const continueRouting = function () {
         <div v-else class="no-categories">
             <IconCategory class="no-categories-icon" />
             <span class="no-categories-text"> Нет добавленных категорий </span>
-            <RouterLink class="add-category" :to="{ name: 'AddInventory' }">
+            <RouterLink class="add-category" :to="{ name: 'AddCategory' }">
                 Добавить категорию
             </RouterLink>
         </div>
