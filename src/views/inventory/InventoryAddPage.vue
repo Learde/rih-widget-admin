@@ -7,9 +7,11 @@ import {
     BaseSelectMenu,
     BaseTextarea,
     SelectInventoryState,
+    SelectCategory,
 } from "@/components";
-import { useInventoryFormStore } from "./model/useInventoryFormStore.js";
 import { useTrans } from "@/stores";
+
+import { useInventoryFormStore } from "./model/useInventoryFormStore.js";
 
 const trans = useTrans();
 const inventoryForm = useInventoryFormStore();
@@ -63,9 +65,7 @@ const inventoryForm = useInventoryFormStore();
                 {{ trans.validationMessages[inventoryForm.stateErrors?.at(0)?.$validator] }}
             </template>
         </SelectInventoryState>
-        <BaseSelectMenu>
-            <template #label> Категория </template>
-        </BaseSelectMenu>
+        <SelectCategory v-model="inventoryForm.formData.categoryId" />
         <BaseSelectMenu :is-error="!inventoryForm.isPriceValid">
             <template #label> Тариф * </template>
             <template #error-text>

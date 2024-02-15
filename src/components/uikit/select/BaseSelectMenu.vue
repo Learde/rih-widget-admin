@@ -1,7 +1,8 @@
 <script setup>
-import { IconChevron } from "@/icones";
-import { TheHeader } from "@/components";
 import { ref } from "vue";
+
+import { TheHeader } from "@/components";
+import { IconChevron } from "@/icones";
 
 defineProps({
     isError: {
