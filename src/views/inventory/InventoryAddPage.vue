@@ -8,6 +8,7 @@ import {
     BaseImageSelect,
     BaseInput,
     BaseTextarea,
+    BaseLoadingModal,
     SelectInventoryState,
     SelectCategory,
     SelectInventoryPrice,
@@ -16,6 +17,10 @@ import { useTrans } from "@/stores";
 
 import { useInventoryFormStore } from "./model/useInventoryFormStore.js";
 
+const props = defineProps({
+    id: { type: [String, Number], default: null },
+});
+
 const trans = useTrans();
 const inventoryForm = useInventoryFormStore();
 const route = useRoute();
@@ -23,6 +28,10 @@ const route = useRoute();
 onMounted(() => {
     if (!route.query.noReset) {
         inventoryForm.$reset();
+
+        if (props.id) {
+            inventoryForm.fillFormData(props.id);
+        }
     }
 });
 </script>
@@ -87,6 +96,7 @@ onMounted(() => {
         <BaseImageSelect />
         <BaseButton @click="inventoryForm.save">Сохранить</BaseButton>
     </div>
+    <BaseLoadingModal :state="inventoryForm.state" />
 </template>
 
 <style lang="scss" scoped>

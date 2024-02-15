@@ -37,6 +37,16 @@ const router = createRouter({
             component: () => import("@/views/inventory/InventoryAddPage.vue"),
         },
         {
+            path: "/inventories/edit/:id",
+            name: "EditInventory",
+            meta: {
+                title: "Редактировать инвентарь",
+                backRouteName: "Inventories",
+            },
+            props: true,
+            component: () => import("@/views/inventory/InventoryAddPage.vue"),
+        },
+        {
             path: "/categories",
             name: "Categories",
             meta: {

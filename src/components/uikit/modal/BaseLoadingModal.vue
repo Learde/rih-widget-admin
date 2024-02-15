@@ -13,7 +13,7 @@ const shouldShow = computed(() => {
 </script>
 
 <template>
-    <div class="wrapper" v-if="shouldShow">
+    <div class="base-loading-modal" v-if="shouldShow">
         <div class="content">
             <IconSpinner class="icon" v-if="state === 'loading'" />
             <IconDone class="check" v-else-if="state === 'success'" />
@@ -22,7 +22,7 @@ const shouldShow = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-.wrapper {
+.base-loading-modal {
     position: fixed;
     inset: 0;
     z-index: 999;
@@ -30,47 +30,47 @@ const shouldShow = computed(() => {
     align-items: center;
     justify-content: center;
     background: rgb(66 66 66 / 70%);
-}
 
-.content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 88px;
-    height: 88px;
-    overflow: hidden;
-    background: #fff;
-    border-radius: 18px;
-}
-
-.title {
-    display: inline-block;
-    margin-bottom: 7px;
-    font-size: 17px;
-    font-weight: 600;
-    line-height: 16px;
-}
-
-.description {
-    display: inline-block;
-    margin-bottom: 20px;
-    font-size: 13px;
-    line-height: 16px;
-}
-
-.check {
-    color: var(--c-gray-5);
-
-    &:deep(path) {
-        stroke-dasharray: 50;
-        stroke-dashoffset: 50;
-        animation: spin-done 0.6s 0.3s ease forwards;
+    .content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 88px;
+        height: 88px;
+        overflow: hidden;
+        background: #fff;
+        border-radius: 18px;
     }
-}
 
-.icon {
-    color: var(--c-gray-5);
-    animation: spin 0.7s linear infinite;
+    .title {
+        display: inline-block;
+        margin-bottom: 7px;
+        font-size: 17px;
+        font-weight: 600;
+        line-height: 16px;
+    }
+
+    .description {
+        display: inline-block;
+        margin-bottom: 20px;
+        font-size: 13px;
+        line-height: 16px;
+    }
+
+    .check {
+        color: var(--c-gray-5);
+
+        &:deep(path) {
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: spin-done 0.6s 0.3s ease forwards;
+        }
+    }
+
+    .icon {
+        color: var(--c-gray-5);
+        animation: spin 0.7s linear infinite;
+    }
 }
 
 @keyframes spin {

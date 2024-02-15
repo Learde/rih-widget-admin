@@ -1,9 +1,10 @@
 <script setup>
+import { refDebounced } from "@vueuse/core";
+import { computed, ref, watchEffect } from "vue";
+import { RouterLink, useRouter } from "vue-router";
+
 import { BaseDeleteModal, BasePaginate, BaseSearchInput, InventoryCard } from "@/components";
 import { IconInventory, IconSearch } from "@/icones";
-import { computed, ref, watchEffect } from "vue";
-import { RouterLink } from "vue-router";
-import { refDebounced } from "@vueuse/core";
 import { useInventoriesStore } from "@/stores";
 
 const perPage = ref(12);
@@ -12,6 +13,7 @@ const searchValue = ref("");
 const debouncedSearchValue = refDebounced(searchValue, 400);
 
 const inventoriesStore = useInventoriesStore();
+const router = useRouter();
 
 const totalPages = computed(() => {
     return Math.ceil(inventoriesStore.meta.total / perPage.value);
@@ -71,6 +73,7 @@ const deleteInventory = async function () {
                         :inventory="inventory"
                         :key="inventory.id"
                         @delete="handleDeleting(inventory.id)"
+                        @edit="router.push({ name: 'EditInventory', params: { id: inventory.id } })"
                     />
                 </template>
                 <template v-else>

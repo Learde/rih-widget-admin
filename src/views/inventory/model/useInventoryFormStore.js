@@ -2,7 +2,10 @@ import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { clone } from "lodash";
 import { defineStore } from "pinia";
-import { computed, reactive } from "vue";
+import { computed, reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+
+import { useInventoriesStore } from "@/stores";
 
 const INVENTORY_FORM_TEMPLATE = {
     title: "",
@@ -15,7 +18,12 @@ const INVENTORY_FORM_TEMPLATE = {
 };
 
 export const useInventoryFormStore = defineStore("inventoryForm", () => {
-    const formData = reactive(clone(INVENTORY_FORM_TEMPLATE));
+    const inventoriesStore = useInventoriesStore();
+    const router = useRouter();
+
+    let formData = reactive(clone(INVENTORY_FORM_TEMPLATE));
+    const state = ref("pending");
+    const id = ref(null);
 
     const rules = {
         formData: {
@@ -47,23 +55,63 @@ export const useInventoryFormStore = defineStore("inventoryForm", () => {
         return v$.value.formData.state.$errors;
     });
 
+    const $reset = function () {
+        formData.title = "";
+        formData.article = "";
+        formData.inventoryNumber = "";
+        formData.description = "";
+        formData.state = null;
+        formData.category = null;
+        formData.price = null;
+        state.value = "pending";
+        id.value = null;
+        v$.value.$reset();
+    };
+
     const save = async function () {
         const isValid = await v$.value.$validate();
+
+        if (!isValid) return;
+
+        state.value = "loading";
+
+        if (id.value) {
+            await inventoriesStore.editOne(id.value, { id: id.value, ...formData });
+        } else {
+            await inventoriesStore.addOne(formData);
+        }
+
+        state.value = "success";
+
+        setTimeout(() => {
+            state.value = "pending";
+            $reset();
+            router.push({ name: "Inventories" });
+        }, 1500);
     };
 
     const handleTitleInput = function () {
         v$.value.formData.title.$touch();
     };
 
-    const $reset = function () {
-        formData.value = clone(INVENTORY_FORM_TEMPLATE);
-        v$.value.$reset();
+    const fillFormData = async function (inventoryId) {
+        const inventory = await inventoriesStore.getOne(inventoryId);
+
+        formData.title = inventory.title;
+        formData.article = inventory.article;
+        formData.inventoryNumber = inventory.inventoryNumber;
+        formData.description = inventory.description;
+        formData.state = inventory.state;
+        formData.category = inventory.category;
+        formData.price = inventory.price;
+        id.value = inventoryId;
     };
 
     return {
         save,
         handleTitleInput,
         formData,
+        state,
         v$,
         isTitleValid,
         isPriceValid,
@@ -71,6 +119,7 @@ export const useInventoryFormStore = defineStore("inventoryForm", () => {
         titleErrors,
         priceErrors,
         stateErrors,
+        fillFormData,
         $reset,
     };
 });
