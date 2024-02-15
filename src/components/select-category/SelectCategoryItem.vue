@@ -25,6 +25,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    isLoading: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 defineEmits(["click"]);
@@ -43,6 +47,7 @@ const itemIndent = computed(() => {
 <template>
     <div
         class="category-item"
+        :class="{ loading: isLoading }"
         :style="{ marginLeft: itemIndent }"
         @click="$emit('click', category)"
     >
@@ -64,6 +69,8 @@ const itemIndent = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+@import "@/assets/skeleton";
+
 .category-item {
     position: relative;
     cursor: pointer;
@@ -81,6 +88,16 @@ const itemIndent = computed(() => {
         height: auto;
         color: var(--c-primary);
         transform: translateY(-50%);
+    }
+
+    &.loading {
+        & h3 {
+            @include skeleton;
+
+            display: inline-block;
+            width: 140px;
+            height: 20px;
+        }
     }
 }
 
