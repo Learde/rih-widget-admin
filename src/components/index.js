@@ -9,6 +9,8 @@ export { default as PointCard } from "./point/PointCard.vue";
 
 export { default as SelectCategory } from "./select-category/SelectCategory.vue";
 
+export { default as SelectInventoryPrice } from "./select-inventory-price/SelectInventoryPrice.vue";
+
 export { default as SelectInventoryState } from "./select-state/SelectInventoryState.vue";
 
 export * from "./uikit";

@@ -7,10 +7,10 @@ import {
     BaseFormGroup,
     BaseImageSelect,
     BaseInput,
-    BaseSelectMenu,
     BaseTextarea,
     SelectInventoryState,
     SelectCategory,
+    SelectInventoryPrice,
 } from "@/components";
 import { useTrans } from "@/stores";
 
@@ -75,13 +75,15 @@ onMounted(() => {
                 {{ trans.validationMessages[inventoryForm.stateErrors?.at(0)?.$validator] }}
             </template>
         </SelectInventoryState>
-        <SelectCategory v-model="inventoryForm.formData.categoryId" />
-        <BaseSelectMenu :is-error="!inventoryForm.isPriceValid">
-            <template #label> Тариф * </template>
+        <SelectCategory v-model="inventoryForm.formData.category" />
+        <SelectInventoryPrice
+            v-model="inventoryForm.formData.price"
+            :is-error="!inventoryForm.isPriceValid"
+        >
             <template #error-text>
                 {{ trans.validationMessages[inventoryForm.priceErrors?.at(0)?.$validator] }}
             </template>
-        </BaseSelectMenu>
+        </SelectInventoryPrice>
         <BaseImageSelect />
         <BaseButton @click="inventoryForm.save">Сохранить</BaseButton>
     </div>
