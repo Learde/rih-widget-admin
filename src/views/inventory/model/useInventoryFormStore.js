@@ -100,6 +100,8 @@ export const useInventoryFormStore = defineStore("inventoryForm", () => {
     };
 
     const fillFormData = async function (inventoryId) {
+        state.value = "loading";
+
         const inventory = await inventoriesStore.getOne(inventoryId);
 
         formData.title = inventory.title;
@@ -110,6 +112,8 @@ export const useInventoryFormStore = defineStore("inventoryForm", () => {
         formData.category = inventory.category;
         formData.price = inventory.price;
         id.value = inventoryId;
+
+        state.value = "pending";
     };
 
     return {
