@@ -2,10 +2,13 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { useVModels } from "@vueuse/core";
+import { directive as vTippy } from "vue-tippy";
 
 import { BaseSquareInput, BaseFormGroup, BaseInput } from "@/components";
 import { IconHelp, IconDelete } from "@/icones";
 import { useTrans } from "@/stores";
+
+import InventoryPriceValueHelp from "./InventoryPriceValueHelp.vue";
 
 const props = defineProps({
     period: {
@@ -96,7 +99,15 @@ const handleFieldInput = function (...fieldNames) {
         <div class="more-then">
             <div class="more-then-title">
                 <span class="more-then-text">Расценка активна, начиная с </span>
-                <IconHelp class="more-then-icon" />
+                <IconHelp
+                    class="more-then-icon"
+                    v-tippy="{
+                        content: InventoryPriceValueHelp,
+                        arrow: true,
+                        theme: 'light',
+                        placement: 'left',
+                    }"
+                />
             </div>
             <div class="more-then-period">
                 <BaseSquareInput min="0" v-model="moreThen.days">
@@ -164,6 +175,10 @@ const handleFieldInput = function (...fieldNames) {
     }
 
     & .more-then-icon {
+        position: relative;
+        left: 7.5px;
+        box-sizing: content-box;
+        padding: 2.5px 7.5px;
         color: var(--c-gray-2);
     }
 
