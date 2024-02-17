@@ -4,7 +4,7 @@ import { required } from "@vuelidate/validators";
 import { reactive, computed, onMounted, ref } from "vue";
 import { useRouter, useRoute, onBeforeRouteLeave } from "vue-router";
 
-import { BaseFormGroup, BaseInput, BaseLoadingModal } from "@/components";
+import { BaseFormGroup, BaseInput, BaseLoadingModal, BaseNotification } from "@/components";
 import { useTrans, useEventBus, useCategoriesStore } from "@/stores";
 
 const trans = useTrans();
@@ -16,6 +16,7 @@ const route = useRoute();
 const formData = reactive({
     title: "",
 });
+const isNotificationShown = ref(false);
 
 const rules = {
     formData: {
@@ -41,28 +42,32 @@ onMounted(() => {
     eventBus.addEventListener("ready", async () => {
         const isValid = await v$.value.$validate();
 
-        if (isValid) {
-            loadingState.value = "loading";
+        if (!isValid) {
+            isNotificationShown.value = true;
 
-            await categoriesStore.addOne({
-                title: formData.title,
-                children: [],
-                discounts: [],
-                prices: [],
-            });
-
-            loadingState.value = "success";
-
-            setTimeout(() => {
-                const query = {};
-
-                if (route.query.backRouteName) {
-                    query.noReset = true;
-                }
-
-                router.push({ name: route.query.backRouteName || "Categories", query });
-            }, 1500);
+            return;
         }
+
+        loadingState.value = "loading";
+
+        await categoriesStore.addOne({
+            title: formData.title,
+            children: [],
+            discounts: [],
+            prices: [],
+        });
+
+        loadingState.value = "success";
+
+        setTimeout(() => {
+            const query = {};
+
+            if (route.query.backRouteName) {
+                query.noReset = true;
+            }
+
+            router.push({ name: route.query.backRouteName || "Categories", query });
+        }, 1500);
     });
 });
 
@@ -90,4 +95,5 @@ onBeforeRouteLeave(() => {
     </div>
 
     <BaseLoadingModal :state="loadingState" />
+    <BaseNotification v-model="isNotificationShown" type="error" />
 </template>

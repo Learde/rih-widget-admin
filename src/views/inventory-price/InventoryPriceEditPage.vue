@@ -9,6 +9,7 @@ import {
     BaseFormGroup,
     BaseInput,
     BaseLoadingModal,
+    BaseNotification,
     InventoryPriceValueEditor,
 } from "@/components";
 import { IconPlus } from "@/icones";
@@ -43,6 +44,7 @@ const PRICE_TEMPLATE = {
     price: 0,
 };
 const prices = ref([cloneDeep(PRICE_TEMPLATE)]);
+const isNotificationShown = ref(false);
 
 const addPrice = function () {
     PRICE_TEMPLATE.key++;
@@ -87,28 +89,32 @@ onMounted(async () => {
     eventBus.addEventListener("ready", async () => {
         const isValid = await v$.value.$validate();
 
-        if (isValid) {
-            loadingState.value = "loading";
+        if (!isValid) {
+            isNotificationShown.value = true;
 
-            if (props.id) {
-                await inventoryPricesStore.editOne(props.id, {
-                    id: props.id,
-                    title: formData.title,
-                    values: prices.value,
-                });
-            } else {
-                await inventoryPricesStore.addOne({
-                    title: formData.title,
-                    values: prices.value,
-                });
-            }
-
-            loadingState.value = "success";
-
-            setTimeout(() => {
-                router.push({ name: "InventoryPrices" });
-            }, 1500);
+            return;
         }
+
+        loadingState.value = "loading";
+
+        if (props.id) {
+            await inventoryPricesStore.editOne(props.id, {
+                id: props.id,
+                title: formData.title,
+                values: prices.value,
+            });
+        } else {
+            await inventoryPricesStore.addOne({
+                title: formData.title,
+                values: prices.value,
+            });
+        }
+
+        loadingState.value = "success";
+
+        setTimeout(() => {
+            router.push({ name: "InventoryPrices" });
+        }, 1500);
     });
 });
 
@@ -151,8 +157,8 @@ onBeforeRouteLeave(() => {
             <span class="add-value-text">Добавить расценку</span>
         </button>
     </div>
-
     <BaseLoadingModal :state="loadingState" />
+    <BaseNotification v-model="isNotificationShown" type="error" />
 </template>
 
 <style lang="scss" scoped>

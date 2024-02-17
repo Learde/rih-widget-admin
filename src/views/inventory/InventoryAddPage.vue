@@ -9,6 +9,7 @@ import {
     BaseInput,
     BaseTextarea,
     BaseLoadingModal,
+    BaseNotification,
     SelectInventoryState,
     SelectCategory,
     SelectInventoryPrice,
@@ -97,6 +98,7 @@ onMounted(() => {
         <BaseButton @click="inventoryForm.save">Сохранить</BaseButton>
     </div>
     <BaseLoadingModal :state="inventoryForm.state" />
+    <BaseNotification v-model="inventoryForm.isNotificationShown" type="error" />
 </template>
 
 <style lang="scss" scoped>

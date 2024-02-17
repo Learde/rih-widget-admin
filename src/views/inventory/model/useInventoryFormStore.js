@@ -24,6 +24,7 @@ export const useInventoryFormStore = defineStore("inventoryForm", () => {
     let formData = reactive(clone(INVENTORY_FORM_TEMPLATE));
     const state = ref("pending");
     const id = ref(null);
+    const isNotificationShown = ref(false);
 
     const rules = {
         formData: {
@@ -71,7 +72,11 @@ export const useInventoryFormStore = defineStore("inventoryForm", () => {
     const save = async function () {
         const isValid = await v$.value.$validate();
 
-        if (!isValid) return;
+        if (!isValid) {
+            isNotificationShown.value = true;
+
+            return;
+        }
 
         state.value = "loading";
 
@@ -112,6 +117,7 @@ export const useInventoryFormStore = defineStore("inventoryForm", () => {
         handleTitleInput,
         formData,
         state,
+        isNotificationShown,
         v$,
         isTitleValid,
         isPriceValid,

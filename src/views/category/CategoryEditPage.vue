@@ -5,7 +5,7 @@ import { clone } from "lodash";
 import { reactive, computed, onMounted, ref } from "vue";
 import { useRouter, onBeforeRouteLeave } from "vue-router";
 
-import { BaseFormGroup, BaseInput, BaseLoadingModal } from "@/components";
+import { BaseFormGroup, BaseInput, BaseLoadingModal, BaseNotification } from "@/components";
 import { useTrans, useEventBus, useCategoriesStore } from "@/stores";
 
 const props = defineProps({
@@ -23,6 +23,7 @@ const router = useRouter();
 const formData = reactive({
     title: "",
 });
+const isNotificationShown = ref(false);
 
 const rules = {
     formData: {
@@ -72,18 +73,22 @@ onMounted(async () => {
     eventBus.addEventListener("ready", async () => {
         const isValid = await v$.value.$validate();
 
-        if (isValid) {
-            loadingState.value = "loading";
+        if (!isValid) {
+            isNotificationShown.value = true;
 
-            currentNode.value.title = formData.title;
-            await categoriesStore.editOne(null, tree.value);
-
-            loadingState.value = "success";
-
-            setTimeout(() => {
-                router.push({ name: "Categories" });
-            }, 1500);
+            return;
         }
+
+        loadingState.value = "loading";
+
+        currentNode.value.title = formData.title;
+        await categoriesStore.editOne(null, tree.value);
+
+        loadingState.value = "success";
+
+        setTimeout(() => {
+            router.push({ name: "Categories" });
+        }, 1500);
     });
 });
 
@@ -111,4 +116,5 @@ onBeforeRouteLeave(() => {
     </div>
 
     <BaseLoadingModal :state="loadingState" />
+    <BaseNotification v-model="isNotificationShown" type="error" />
 </template>
