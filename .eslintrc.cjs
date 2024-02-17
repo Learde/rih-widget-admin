@@ -32,7 +32,7 @@ module.exports = {
         "n/no-extraneous-import": [
             "error",
             {
-                allowModules: ["lodash"],
+                allowModules: ["lodash", "vue-tippy", "tippy.js"],
             },
         ],
         "import/order": [
