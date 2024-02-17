@@ -1,3 +1,4 @@
+export { default as IconAlert } from "./IconAlert.vue";
 export { default as IconBars } from "./IconBars.vue";
 export { default as IconSettings } from "./IconSettings.vue";
 export { default as IconInventory } from "./IconInventory.vue";

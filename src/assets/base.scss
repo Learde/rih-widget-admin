@@ -9,9 +9,19 @@
     --c-gray-4: #f2f3f5;
     --c-gray-5: #818c99;
     --c-gray-6: #ebedf0;
-    --c-gray-7: #99A2AD;
-    --c-red: #E64646;
-    --c-red-2: #FAEBEB;
+    --c-gray-7: #99a2ad;
+    --c-red: #e64646;
+    --c-red-2: #faebeb;
+    --app-padding-y: 0px;
+    --app-padding-x: 20px;
+    --app-header-height: 30px;
+    --app-header-mb: 40px;
+}
+
+@media (width >= 768px) {
+    :root {
+        --app-padding-y: 30px;
+    }
 }
 
 *,

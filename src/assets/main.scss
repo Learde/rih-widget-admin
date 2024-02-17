@@ -2,23 +2,11 @@
 
 #app,
 .app {
-    --app-padding-y: 0px;
-    --app-padding-x: 20px;
-    --app-header-height: 30px;
-    --app-header-mb: 40px;
-
     max-width: 1280px;
     min-height: 100vh;
     padding: var(--app-padding-y) var(--app-padding-x);
     margin: 0 auto;
     font-weight: normal;
-}
-
-@media (width >= 768px) {
-    #app,
-    .app {
-        --app-padding-y: 30px;
-    }
 }
 
 a {
