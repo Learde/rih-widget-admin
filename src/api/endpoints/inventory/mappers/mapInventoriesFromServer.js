@@ -30,6 +30,13 @@ export const mapInventoryFromServer = getDataMapper({
         { applyToElements: false },
     ),
     category: mapField("category", mapCategoryFromServer),
+    media: mapField("media", {
+        dictId: mapField("dict_id", Number),
+        src: mapField("src"),
+        id: mapField("media_id", Number),
+        resourceId: mapField("media_resource_id", Number),
+        orderId: mapField("order_id", Number),
+    }),
 });
 
 export const mapInventoriesFromServer = mapArray(mapInventoryFromServer);

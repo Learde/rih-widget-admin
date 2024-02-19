@@ -16,6 +16,7 @@ export { default as BasePaginate } from "./paginate/BasePaginate.vue";
 
 export { default as BaseSelectMenu } from "./select/BaseSelectMenu.vue";
 export { default as BaseImageSelect } from "./select/BaseImageSelect.vue";
+export { default as BaseSelect } from "./select/BaseSelect.vue";
 
 export { default as BaseInput } from "./input/BaseInput.vue";
 export { default as BaseSearchInput } from "./input/BaseSearchInput.vue";

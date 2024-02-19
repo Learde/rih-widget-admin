@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { RouterView, useRoute } from "vue-router";
 
-import { setToken } from "@/api";
+// import { setToken } from "@/api";
 import { TheHeader } from "@/components";
 
 const route = useRoute();
@@ -11,7 +11,7 @@ const hasHeader = computed(() => {
     return Boolean(route.meta?.title);
 });
 
-setToken("oFydZpjyTYlzTK8M8ZVDDENlCNLCxxy7");
+// setToken("oFydZpjyTYlzTK8M8ZVDDENlCNLCxxy7");
 </script>
 
 <template>

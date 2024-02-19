@@ -1,4 +1,4 @@
-import { HTTPInstance, token } from "./config";
+import { HTTPInstance, token, jwt } from "./config";
 
 export const makeHTTPRequest = function ({
     url = "/",
@@ -7,8 +7,11 @@ export const makeHTTPRequest = function ({
     data = {},
     headers = {},
     responseType = "json",
+    withCredentials = false,
 }) {
-    if (token) params.get_token = token;
+    if (token) params.token = token;
+
+    if (jwt) headers.Authorization = `Bearer ${jwt}`;
 
     return HTTPInstance.request({
         url,
@@ -17,5 +20,6 @@ export const makeHTTPRequest = function ({
         params,
         data,
         responseType,
+        withCredentials,
     });
 };

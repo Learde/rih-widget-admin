@@ -15,6 +15,7 @@ const INVENTORY_FORM_TEMPLATE = {
     state: null,
     category: null,
     price: null,
+    media: [],
 };
 
 export const useInventoryFormStore = defineStore("inventoryForm", () => {
@@ -64,6 +65,7 @@ export const useInventoryFormStore = defineStore("inventoryForm", () => {
         formData.state = null;
         formData.category = null;
         formData.price = null;
+        formData.media = [];
         state.value = "pending";
         id.value = null;
         v$.value.$reset();
@@ -111,6 +113,7 @@ export const useInventoryFormStore = defineStore("inventoryForm", () => {
         formData.state = inventory.state;
         formData.category = inventory.category;
         formData.price = inventory.price;
+        formData.media = inventory.media;
         id.value = inventoryId;
 
         state.value = "pending";

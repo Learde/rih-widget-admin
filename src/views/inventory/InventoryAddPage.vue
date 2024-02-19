@@ -94,7 +94,7 @@ onMounted(() => {
                 {{ trans.validationMessages[inventoryForm.priceErrors?.at(0)?.$validator] }}
             </template>
         </SelectInventoryPrice>
-        <BaseImageSelect />
+        <BaseImageSelect v-model="inventoryForm.formData.media" />
         <BaseButton @click="inventoryForm.save">Сохранить</BaseButton>
     </div>
     <BaseLoadingModal :state="inventoryForm.state" />

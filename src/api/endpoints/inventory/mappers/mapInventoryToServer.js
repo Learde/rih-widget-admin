@@ -14,6 +14,14 @@ export const mapInventoryToServer = getDataMapper(
             return [item.id];
         }),
         is_group: mapField("isGroup", () => false),
+        media: mapField("media", {
+            dict_id: mapField("dictId"),
+            external_src: mapField("src"),
+            src: mapField("src"),
+            media_id: mapField("id"),
+            resource_id: mapField("resourceId"),
+            order_id: mapField("orderId"),
+        }),
     },
     { shouldAvoidNull: true, shouldAvoidUndefined: true },
 );
