@@ -27,7 +27,12 @@ const reload = function () {
 </script>
 
 <template>
-    <BaseSelectMenu modal-title="Тарифы" :is-error="isError" @open="reload">
+    <BaseSelectMenu
+        modal-title="Тарифы"
+        :is-error="isError"
+        :value="modelValue?.title"
+        @open="reload"
+    >
         <template #label> Тариф * </template>
         <template #modal-content>
             <div class="select-inventory-price-content">

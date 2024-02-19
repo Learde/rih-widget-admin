@@ -27,7 +27,13 @@ const reload = function () {
 </script>
 
 <template>
-    <BaseSelectMenu modal-title="Категория инвентаря" :is-error="isError" @open="reload">
+    <BaseSelectMenu
+        modal-title="Категория инвентаря"
+        placeholder="Не выбрана"
+        :is-error="isError"
+        :value="modelValue?.title"
+        @open="reload"
+    >
         <template #label> Категория </template>
         <template #modal-content>
             <div class="select-category-content">

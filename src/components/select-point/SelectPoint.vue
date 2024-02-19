@@ -27,7 +27,12 @@ const reload = function () {
 </script>
 
 <template>
-    <BaseSelectMenu modal-title="Пункты проката" :is-error="isError" @open="reload">
+    <BaseSelectMenu
+        modal-title="Пункты проката"
+        :is-error="isError"
+        :value="modelValue?.title"
+        @open="reload"
+    >
         <template #label> Пункт проката </template>
         <template #modal-content>
             <div class="select-point-content">

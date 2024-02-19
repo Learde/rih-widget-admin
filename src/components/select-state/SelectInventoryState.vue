@@ -1,8 +1,9 @@
 <script setup>
 import { BaseSelectMenu } from "@/components";
-import SelectInventoryStateItem from "./SelectInventoryStateItem.vue";
-import { statesDescription } from "./model/statesDescription.js";
 import { useInventoryStatesStore } from "@/stores";
+
+import { statesDescription } from "./model/statesDescription.js";
+import SelectInventoryStateItem from "./SelectInventoryStateItem.vue";
 
 defineProps({
     isError: {
@@ -26,7 +27,12 @@ const reload = function () {
 </script>
 
 <template>
-    <BaseSelectMenu modal-title="Статус инвентаря" :is-error="isError" @open="reload">
+    <BaseSelectMenu
+        modal-title="Статус инвентаря"
+        :is-error="isError"
+        :value="modelValue?.title"
+        @open="reload"
+    >
         <template #label> Статус * </template>
         <template #modal-content>
             <div class="select-state-content">
