@@ -52,7 +52,7 @@ const accept = function () {
 }
 
 .content {
-    width: 280px;
+    width: 272px;
     padding: 19px 16px 0;
     overflow: hidden;
     text-align: center;
@@ -62,15 +62,15 @@ const accept = function () {
 
 .title {
     display: inline-block;
-    margin-bottom: 7px;
+    margin-bottom: 16px;
     font-size: 17px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 16px;
 }
 
 .description {
     display: inline-block;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     font-size: 13px;
     line-height: 16px;
 }
