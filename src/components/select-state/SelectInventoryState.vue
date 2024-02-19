@@ -15,7 +15,7 @@ defineProps({
         default: null,
     },
 });
-defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue"]);
 
 const inventoryStatesStore = useInventoryStatesStore();
 
@@ -23,6 +23,11 @@ const reload = function () {
     if (inventoryStatesStore.hasUnloadedOptions) {
         inventoryStatesStore.fetchMany({ perPage: 999, page: 1, search: "" });
     }
+};
+
+const handleClick = function (e, close) {
+    emit("update:modelValue", e);
+    close();
 };
 </script>
 
@@ -34,7 +39,7 @@ const reload = function () {
         @open="reload"
     >
         <template #label> Статус * </template>
-        <template #modal-content>
+        <template #modal-content="{ closeModal }">
             <div class="select-state-content">
                 <template v-if="!inventoryStatesStore.isManyLoading">
                     <SelectInventoryStateItem
@@ -46,7 +51,7 @@ const reload = function () {
                         "
                         :has-border="index !== inventoryStatesStore.listData.length - 1"
                         :is-active="state.id === modelValue?.id"
-                        @click="$emit('update:modelValue', state)"
+                        @click="handleClick(state, closeModal)"
                     />
                 </template>
                 <template v-else>

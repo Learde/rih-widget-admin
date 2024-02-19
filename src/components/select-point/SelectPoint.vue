@@ -15,7 +15,7 @@ defineProps({
         default: null,
     },
 });
-defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue"]);
 
 const pointsStore = usePointsStore();
 
@@ -23,6 +23,11 @@ const reload = function () {
     if (pointsStore.hasUnloadedOptions) {
         pointsStore.fetchMany({ perPage: 999, page: 1, search: "" });
     }
+};
+
+const handleClick = function (e, close) {
+    emit("update:modelValue", e);
+    close();
 };
 </script>
 
@@ -34,7 +39,7 @@ const reload = function () {
         @open="reload"
     >
         <template #label> Пункт проката </template>
-        <template #modal-content>
+        <template #modal-content="{ closeModal }">
             <div class="select-point-content">
                 <template v-if="!pointsStore.isManyLoading && pointsStore.listData.length > 0">
                     <SelectPointItem
@@ -43,7 +48,7 @@ const reload = function () {
                         :point="point"
                         :has-border="index !== pointsStore.listData.length - 1"
                         :is-active="point.id === modelValue?.id"
-                        @click="$emit('update:modelValue', $event)"
+                        @click="handleClick($event, closeModal)"
                     />
                 </template>
                 <template

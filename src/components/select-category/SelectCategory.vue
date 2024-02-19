@@ -15,7 +15,7 @@ defineProps({
         default: null,
     },
 });
-defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue"]);
 
 const categoriesStore = useCategoriesStore();
 
@@ -23,6 +23,11 @@ const reload = function () {
     if (categoriesStore.hasUnloadedOptions) {
         categoriesStore.fetchMany({ perPage: 999, page: 1, search: "" });
     }
+};
+
+const handleClick = function (e, close) {
+    emit("update:modelValue", e);
+    close();
 };
 </script>
 
@@ -35,7 +40,7 @@ const reload = function () {
         @open="reload"
     >
         <template #label> Категория </template>
-        <template #modal-content>
+        <template #modal-content="{ closeModal }">
             <div class="select-category-content">
                 <template
                     v-if="!categoriesStore.isManyLoading && categoriesStore.listData.length > 0"
@@ -46,7 +51,7 @@ const reload = function () {
                         :category="category"
                         :has-border="index !== categoriesStore.listData.length - 1"
                         :active-id="modelValue?.id"
-                        @click="$emit('update:modelValue', $event)"
+                        @click="handleClick($event, closeModal)"
                     />
                 </template>
                 <template

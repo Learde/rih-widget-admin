@@ -55,12 +55,14 @@ const closeModal = function () {
             <slot name="error-text"></slot>
         </template>
     </BaseFormGroup>
-    <div class="select-menu-modal" v-if="shouldShowModal">
-        <div class="app">
-            <TheHeader :title="modalTitle" :back-handler="closeModal" />
-            <slot name="modal-content"></slot>
+    <Transition name="slide">
+        <div class="select-menu-modal" v-if="shouldShowModal">
+            <div class="app">
+                <TheHeader :title="modalTitle" :back-handler="closeModal" />
+                <slot name="modal-content" :close-modal="closeModal"></slot>
+            </div>
         </div>
-    </div>
+    </Transition>
 </template>
 
 <style lang="scss" scoped>
@@ -108,5 +110,18 @@ const closeModal = function () {
         color: var(--c-gray-7);
         transform: translateY(-50%) rotate(90deg);
     }
+}
+
+.slide-enter-active {
+    transition: all 0.34s ease-in;
+}
+
+.slide-leave-active {
+    transition: all 0.34s ease-out;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+    transform: translateY(100%);
 }
 </style>

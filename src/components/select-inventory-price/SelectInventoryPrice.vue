@@ -15,7 +15,7 @@ defineProps({
         default: null,
     },
 });
-defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue"]);
 
 const inventoryPricesStore = useInventoryPricesStore();
 
@@ -23,6 +23,11 @@ const reload = function () {
     if (inventoryPricesStore.hasUnloadedOptions) {
         inventoryPricesStore.fetchMany({ perPage: 999, page: 1, search: "" });
     }
+};
+
+const handleClick = function (e, close) {
+    emit("update:modelValue", e);
+    close();
 };
 </script>
 
@@ -34,7 +39,7 @@ const reload = function () {
         @open="reload"
     >
         <template #label> Тариф * </template>
-        <template #modal-content>
+        <template #modal-content="{ closeModal }">
             <div class="select-inventory-price-content">
                 <template
                     v-if="
@@ -48,7 +53,7 @@ const reload = function () {
                         :inventory-price="inventoryPrice"
                         :has-border="index !== inventoryPricesStore.listData.length - 1"
                         :is-active="inventoryPrice.id === modelValue?.id"
-                        @click="$emit('update:modelValue', $event)"
+                        @click="handleClick($event, closeModal)"
                     />
                 </template>
                 <template
