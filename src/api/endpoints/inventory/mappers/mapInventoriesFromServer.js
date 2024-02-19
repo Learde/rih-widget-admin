@@ -12,6 +12,10 @@ export const mapInventoryFromServer = getDataMapper({
     article: mapField("article_number"),
     description: mapField("description"),
     inventoryNumber: mapField("rent_number"),
+    point: mapField("point", {
+        id: mapField("id", Number),
+        title: mapField("title"),
+    }),
     state: mapField("state", {
         id: mapField("id", Number),
         title: mapField("title"),

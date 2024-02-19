@@ -13,6 +13,7 @@ import {
     SelectInventoryState,
     SelectCategory,
     SelectInventoryPrice,
+    SelectPoint,
 } from "@/components";
 import { useTrans } from "@/stores";
 
@@ -94,6 +95,7 @@ onMounted(() => {
                 {{ trans.validationMessages[inventoryForm.priceErrors?.at(0)?.$validator] }}
             </template>
         </SelectInventoryPrice>
+        <SelectPoint v-model="inventoryForm.formData.point" />
         <BaseImageSelect v-model="inventoryForm.formData.media" />
         <BaseButton @click="inventoryForm.save">Сохранить</BaseButton>
     </div>
