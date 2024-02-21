@@ -1,5 +1,5 @@
 export * from "./endpoints";
 export * from "./mappers";
 
-export { setHeaders, addHeaders, setBaseUrl, setToken } from "./config.js";
+export { setHeaders, addHeaders, setBaseUrl, setToken, setJWT, hasToken } from "./config.js";
 export { makeHTTPRequest } from "./makeHTTPRequest.js";

@@ -1,8 +1,32 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { hasToken } from "@/api";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
+        {
+            path: "/onboarding/",
+            name: "Onboarding",
+            redirect: "/onboarding/step-1",
+            component: () => import("@/views/onboarding/OnboardingPage.vue"),
+            children: [
+                {
+                    path: "step-1",
+                    name: "OnboardingStep1",
+                    component: () => import("@/views/onboarding/OnboardingStep1.vue"),
+                },
+                {
+                    path: "step-2",
+                    name: "OnboardingStep2",
+                    component: () => import("@/views/onboarding/OnboardingStep2.vue"),
+                },
+                {
+                    path: "step-3",
+                    name: "OnboardingStep3",
+                    component: () => import("@/views/onboarding/OnboardingStep3.vue"),
+                },
+            ],
+        },
         {
             path: "/",
             name: "Home",
@@ -140,6 +164,20 @@ const router = createRouter({
             component: () => import("@/views/inventory-price/InventoryPriceEditPage.vue"),
         },
     ],
+});
+
+const onboardingRoutes = ["Onboarding", "OnboardingStep1", "OnboardingStep2", "OnboardingStep3"];
+
+router.beforeEach((to) => {
+    const isOnboardingRoute = onboardingRoutes.includes(to.name);
+
+    if (!hasToken() && !isOnboardingRoute) {
+        return { name: "Onboarding" };
+    }
+
+    if (hasToken() && isOnboardingRoute) {
+        return { name: "Home" };
+    }
 });
 
 export default router;
