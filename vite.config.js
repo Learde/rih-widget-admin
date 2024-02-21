@@ -14,5 +14,5 @@ export default defineConfig({
     build: {
         outDir: "docs",
     },
-    base: "/rih-widget-admin/",
+    base: "/",
 });

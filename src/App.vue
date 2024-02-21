@@ -1,5 +1,6 @@
 <script setup>
-import { computed } from "vue";
+import bridge from "@vkontakte/vk-bridge";
+import { computed, onMounted } from "vue";
 import { RouterView, useRoute } from "vue-router";
 
 import { TheHeader } from "@/components";
@@ -10,6 +11,10 @@ const userStore = useUserStore();
 
 const hasHeader = computed(() => {
     return Boolean(route.meta?.title);
+});
+
+onMounted(() => {
+    bridge.send("VKWebAppInit");
 });
 </script>
 
