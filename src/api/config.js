@@ -5,7 +5,7 @@ const BASE_URL = window.BASE_URL ?? import.meta.env.VITE_APP_API;
 
 // Variables
 let token = null;
-let jwt = null;
+let jwt = 1;
 
 const HTTPInstance = axios.create({
     baseURL: BASE_URL,

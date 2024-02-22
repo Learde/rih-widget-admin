@@ -1,4 +1,5 @@
 import "tippy.js/dist/tippy.css";
+import "driver.js/dist/driver.css";
 import "./assets/main.scss";
 
 import { createPinia } from "pinia";

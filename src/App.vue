@@ -3,6 +3,7 @@ import bridge from "@vkontakte/vk-bridge";
 import { computed, onMounted } from "vue";
 import { RouterView, useRoute } from "vue-router";
 
+import { hasToken } from "@/api";
 import { TheHeader } from "@/components";
 import { useUserStore } from "@/stores";
 
@@ -15,6 +16,7 @@ const hasHeader = computed(() => {
 
 onMounted(() => {
     bridge.send("VKWebAppInit");
+    userStore.setIsAuthenticated(hasToken());
 });
 </script>
 

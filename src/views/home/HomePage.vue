@@ -10,6 +10,11 @@ import {
     IconSettings,
     IconLocation,
 } from "@/icones";
+import { useOnboardingStore } from "@/stores";
+
+const onboardingStore = useOnboardingStore();
+
+onboardingStore.start();
 </script>
 
 <template>
@@ -22,7 +27,7 @@ import {
             <div class="icon-wrapper"><IconSettings class="icon" /></div>
             <span>Настройка витрины</span> <IconChevron class="chevron" />
         </RouterLink>
-        <RouterLink class="link" :to="{ name: 'InventoryPrices' }">
+        <RouterLink class="link" id="link-inventory-prices" :to="{ name: 'InventoryPrices' }">
             <div class="icon-wrapper"><IconPrice class="icon" /></div>
             <span>Настройка тарифов</span> <IconChevron class="chevron" />
         </RouterLink>
