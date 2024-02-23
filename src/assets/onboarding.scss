@@ -1,0 +1,60 @@
+.onboarding-popover {
+    min-width: 300px;
+    max-width: 400px;
+    padding: 24px 16px 16px;
+    border-radius: 18px;
+
+    & .driver-popover-title {
+        margin-bottom: 8px;
+        font-size: 17px;
+        font-weight: 600;
+        line-height: 25px;
+        text-align: center;
+    }
+
+    & .driver-popover-description {
+        font-size: 15px;
+        line-height: 20px;
+    }
+
+    & .driver-popover-footer {
+        margin-top: 32px;
+
+        & .driver-popover-navigation-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        & button {
+            width: 100%;
+            height: 44px;
+            margin: 0;
+            font-size: 17px;
+            line-height: 22px;
+            color: #fff;
+            text-align: center;
+            text-shadow: none;
+            background-color: var(--c-primary);
+            border: none;
+            border-radius: 10px;
+
+            &.skip-btn {
+                color: var(--c-primary);
+                background-color: var(--c-gray-6);
+            }
+        }
+    }
+
+    & .driver-popover-close-btn {
+        top: 12px;
+        right: 16px;
+        width: 24px;
+        height: 24px;
+        font-size: 20px;
+        line-height: 24px;
+        color: #818c99;
+        background-color: rgba(129 140 153 / 12%);
+        border-radius: 50%;
+    }
+}

@@ -5,21 +5,34 @@ export const useOnboardingStore = defineStore("onboarding", () => {
     const driverObj = driver({
         showProgress: false,
         allowClose: false,
+        popoverClass: "onboarding-popover",
+        nextBtnText: "Далее",
         steps: [
             {
                 element: null,
                 popover: {
                     title: "Сейчас мы научим вас",
                     description: "Как какать",
-                    showButtons: ["next"],
                     nextBtnText: "Начать",
+                    showButtons: ["next", "close"],
+                    onPopoverRender: (popover) => {
+                        const skipButton = document.createElement("button");
+
+                        skipButton.classList.add("skip-btn");
+                        skipButton.innerText = "Пропустить обучение";
+                        popover.footerButtons.append(skipButton);
+
+                        skipButton.addEventListener("click", () => {
+                            driverObj.destroy();
+                        });
+                    },
                 },
             },
             {
-                element: "#link-inventory-prices",
+                element: "#link-inventory",
                 popover: {
                     title: "Тарифы",
-                    showButtons: [],
+                showButtons: ["close"],
                     description:
                         "Для добавления инвентаря сначала необходимо добавить тариф. Перейдите в настройки тарифов",
                 },
@@ -27,18 +40,6 @@ export const useOnboardingStore = defineStore("onboarding", () => {
             { element: ".sidebar", popover: { title: "Title", description: "Description" } },
             { element: ".footer", popover: { title: "Title", description: "Description" } },
         ],
-        showButtons: [],
-        nextBtnText: "Далее",
-        onPopoverRender: (popover) => {
-            const skipButton = document.createElement("button");
-
-            skipButton.innerText = "Пропустить обучение";
-            popover.footerButtons.prepend(skipButton);
-
-            skipButton.addEventListener("click", () => {
-                driverObj.destroy();
-            });
-        },
     });
 
     const start = function () {

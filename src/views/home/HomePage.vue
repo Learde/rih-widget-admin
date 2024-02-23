@@ -19,7 +19,7 @@ onboardingStore.start();
 
 <template>
     <main class="main">
-        <RouterLink class="link" :to="{ name: 'Inventories' }">
+        <RouterLink class="link" id="link-inventory" :to="{ name: 'Inventories' }">
             <div class="icon-wrapper"><IconInventory class="icon" /></div>
             <span>Склад инвентаря</span> <IconChevron class="chevron" />
         </RouterLink>
