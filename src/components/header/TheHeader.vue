@@ -13,7 +13,15 @@ const props = defineProps({
         type: String,
         default: null,
     },
+    addRouteQuery: {
+        type: Object,
+        default: null,
+    },
     backHandler: {
+        type: Function,
+        default: null,
+    },
+    leaveHandler: {
         type: Function,
         default: null,
     },
@@ -35,11 +43,23 @@ const handleBack = function () {
         return props.backHandler();
     }
 
+    if (props.leaveHandler) {
+        return props.leaveHandler();
+    }
+
     if (props.backRouteName) {
         return router.push({ name: props.backRouteName });
     }
 
     router.go(-1);
+};
+
+const handleAdd = function () {
+    if (props.leaveHandler) {
+        props.leaveHandler();
+    }
+
+    router.push({ name: props.addRouteName, query: props.addRouteQuery });
 };
 
 const handleReady = function () {
@@ -53,11 +73,7 @@ const handleReady = function () {
         <h2 class="title">
             {{ title }}
         </h2>
-        <IconPlus
-            v-if="Boolean(addRouteName)"
-            class="plus add-entity"
-            @click="router.push({ name: addRouteName })"
-        />
+        <IconPlus v-if="Boolean(addRouteName)" class="plus add-entity" @click="handleAdd" />
         <span v-if="hasReadyButton" class="ready-button" @click="handleReady"> Готово </span>
     </div>
 </template>

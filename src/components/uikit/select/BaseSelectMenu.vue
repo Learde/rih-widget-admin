@@ -13,6 +13,14 @@ defineProps({
         type: String,
         default: "",
     },
+    addRouteName: {
+        type: String,
+        default: null,
+    },
+    backRouteName: {
+        type: String,
+        default: null,
+    },
     placeholder: {
         type: String,
         default: "Не выбран",
@@ -62,7 +70,13 @@ const closeModal = function () {
     <Transition name="slide">
         <div class="select-menu-modal" v-if="shouldShowModal">
             <div class="app">
-                <TheHeader :title="modalTitle" :back-handler="closeModal" />
+                <TheHeader
+                    :title="modalTitle"
+                    :leave-handler="closeModal"
+                    :back-route-name="backRouteName"
+                    :add-route-query="backRouteName ? { backRouteName: backRouteName } : null"
+                    :add-route-name="addRouteName"
+                />
                 <slot name="modal-content" :close-modal="closeModal"></slot>
             </div>
         </div>

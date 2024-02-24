@@ -14,6 +14,10 @@ defineProps({
         type: Object,
         default: null,
     },
+    backRouteName: {
+        type: String,
+        default: "AddInventory",
+    },
 });
 const emit = defineEmits(["update:modelValue"]);
 
@@ -37,6 +41,8 @@ const handleClick = function (e, close) {
         placeholder="Не выбрана"
         :is-error="isError"
         :value="modelValue?.title"
+        add-route-name="AddCategory"
+        :back-route-name="backRouteName"
         @open="reload"
     >
         <template #label> Категория </template>
@@ -62,10 +68,7 @@ const handleClick = function (e, close) {
                     <div class="no-categories">
                         <IconCategory class="no-categories-icon" />
                         <span class="no-categories-text"> Нет добавленных категорий </span>
-                        <RouterLink
-                            class="add-category"
-                            :to="{ name: 'AddCategory', query: { backRouteName: 'AddInventory' } }"
-                        >
+                        <RouterLink class="add-category" :to="{ name: 'AddCategory' }">
                             Добавить категорию
                         </RouterLink>
                     </div>

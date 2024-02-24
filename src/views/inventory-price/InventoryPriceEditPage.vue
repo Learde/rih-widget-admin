@@ -3,7 +3,7 @@ import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { cloneDeep } from "lodash";
 import { reactive, computed, onMounted, ref } from "vue";
-import { useRouter, onBeforeRouteLeave } from "vue-router";
+import { useRouter, useRoute, onBeforeRouteLeave } from "vue-router";
 
 import {
     BaseFormGroup,
@@ -26,6 +26,7 @@ const trans = useTrans();
 const eventBus = useEventBus();
 const inventoryPricesStore = useInventoryPricesStore();
 const router = useRouter();
+const route = useRoute();
 
 const formData = reactive({
     title: "",
@@ -113,7 +114,13 @@ onMounted(async () => {
         loadingState.value = "success";
 
         setTimeout(() => {
-            router.push({ name: "InventoryPrices" });
+            const query = {};
+
+            if (route.query.backRouteName) {
+                query.noReset = true;
+            }
+
+            router.push({ name: route.query.backRouteName || "InventoryPrices", query });
         }, 1500);
     });
 });

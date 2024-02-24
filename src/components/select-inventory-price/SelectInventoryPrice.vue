@@ -14,6 +14,10 @@ defineProps({
         type: Object,
         default: null,
     },
+    backRouteName: {
+        type: String,
+        default: "AddInventory",
+    },
 });
 const emit = defineEmits(["update:modelValue", "opened"]);
 
@@ -36,6 +40,8 @@ const handleClick = function (e, close) {
         modal-title="Тарифы"
         :is-error="isError"
         :value="modelValue?.title"
+        add-route-name="AddInventoryPrice"
+        :back-route-name="backRouteName"
         @open="reload"
         @opened="emit('opened')"
     >

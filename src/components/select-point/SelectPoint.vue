@@ -14,6 +14,10 @@ defineProps({
         type: Object,
         default: null,
     },
+    backRouteName: {
+        type: String,
+        default: "AddInventory",
+    },
 });
 const emit = defineEmits(["update:modelValue"]);
 
@@ -36,6 +40,8 @@ const handleClick = function (e, close) {
         modal-title="Пункты проката"
         :is-error="isError"
         :value="modelValue?.title"
+        add-route-name="AddPoint"
+        :back-route-name="backRouteName"
         @open="reload"
     >
         <template #label> Пункт проката </template>
