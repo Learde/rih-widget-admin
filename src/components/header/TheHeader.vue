@@ -69,7 +69,7 @@ const handleReady = function () {
 
 <template>
     <div class="header">
-        <IconChevron class="chevron" @click="handleBack" />
+        <IconChevron class="chevron back-btn" @click="handleBack" />
         <h2 class="title">
             {{ title }}
         </h2>

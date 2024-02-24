@@ -1,4 +1,6 @@
 <script setup>
+import { nextTick } from "vue";
+
 import { BaseSelectMenu } from "@/components";
 import { IconCategory } from "@/icones";
 import { useCategoriesStore } from "@/stores";
@@ -19,13 +21,16 @@ defineProps({
         default: "AddInventory",
     },
 });
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "fetched"]);
 
 const categoriesStore = useCategoriesStore();
 
-const reload = function () {
+const reload = async function () {
     if (categoriesStore.hasUnloadedOptions) {
-        categoriesStore.fetchMany({ perPage: 999, page: 1, search: "" });
+        await categoriesStore.fetchMany({ perPage: 999, page: 1, search: "" });
+
+        await nextTick();
+        emit("fetched");
     }
 };
 

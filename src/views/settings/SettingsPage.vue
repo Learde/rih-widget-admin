@@ -1,4 +1,6 @@
 <script setup>
+import { ref, onMounted } from "vue";
+
 import {
     BaseColorPicker,
     BaseFormGroup,
@@ -7,7 +9,9 @@ import {
     BaseToggler,
     CheckboxWithAdditional,
 } from "@/components";
-import { ref } from "vue";
+import { useOnboardingStore } from "@/stores";
+
+const onboardingStore = useOnboardingStore();
 
 const FILTERS_POSITION_META = {
     left: {
@@ -40,6 +44,10 @@ const settings = ref({
     filterCategory: null,
     primaryColor: "#2e55b9",
     backgroundColor: "#fafafa",
+});
+
+onMounted(() => {
+    onboardingStore.moveNext();
 });
 </script>
 

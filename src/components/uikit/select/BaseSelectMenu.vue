@@ -39,9 +39,9 @@ const showModal = async function () {
     document.body.style.overflow = "hidden";
     emit("open");
 
-    await nextTick();
-
-    emit("opened");
+    setTimeout(() => {
+        emit("opened");
+    }, 340);
 };
 
 const closeModal = function () {

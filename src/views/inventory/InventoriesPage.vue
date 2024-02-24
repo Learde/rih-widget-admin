@@ -13,6 +13,7 @@ const searchValue = ref("");
 const debouncedSearchValue = refDebounced(searchValue, 400);
 
 const inventoriesStore = useInventoriesStore();
+const onboardingStore = useOnboardingStore();
 const router = useRouter();
 
 const totalPages = computed(() => {
@@ -60,8 +61,6 @@ const deleteInventory = async function () {
     await inventoriesStore.deleteOne(deletingId.value);
     reload();
 };
-
-const onboardingStore = useOnboardingStore();
 
 onMounted(() => {
     onboardingStore.moveNext();

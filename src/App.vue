@@ -5,11 +5,7 @@ import { RouterView, useRoute } from "vue-router";
 
 import { hasToken } from "@/api";
 import { TheHeader } from "@/components";
-import { useUserStore, useOnboardingStore } from "@/stores";
-
-const onboardingStore = useOnboardingStore();
-
-onboardingStore.start();
+import { useUserStore } from "@/stores";
 
 const route = useRoute();
 const userStore = useUserStore();

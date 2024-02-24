@@ -22,7 +22,7 @@ useHomeOnboarding();
             <div class="icon-wrapper"><IconInventory class="icon" /></div>
             <span>Склад инвентаря</span> <IconChevron class="chevron" />
         </RouterLink>
-        <RouterLink class="link" :to="{ name: 'Settings' }">
+        <RouterLink class="link" id="link-settings" :to="{ name: 'Settings' }">
             <div class="icon-wrapper"><IconSettings class="icon" /></div>
             <span>Настройка витрины</span> <IconChevron class="chevron" />
         </RouterLink>
@@ -38,7 +38,7 @@ useHomeOnboarding();
             <div class="icon-wrapper"><IconLocation class="icon" /></div>
             <span>Пункты проката</span> <IconChevron class="chevron" />
         </RouterLink>
-        <a class="link" href="https://lk.rentinhand.ru">
+        <a class="link" id="link-rih" href="https://lk.rentinhand.ru">
             <div class="icon-wrapper"><IconRIHLogo class="icon" /></div>
             <span>Личный кабинет Rent in Hand</span> <IconChevron class="chevron" />
         </a>

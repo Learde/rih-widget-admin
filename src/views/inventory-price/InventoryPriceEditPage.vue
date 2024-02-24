@@ -13,7 +13,7 @@ import {
     InventoryPriceValueEditor,
 } from "@/components";
 import { IconPlus } from "@/icones";
-import { useTrans, useEventBus, useInventoryPricesStore } from "@/stores";
+import { useTrans, useEventBus, useInventoryPricesStore, useOnboardingStore } from "@/stores";
 
 const props = defineProps({
     id: {
@@ -27,6 +27,7 @@ const eventBus = useEventBus();
 const inventoryPricesStore = useInventoryPricesStore();
 const router = useRouter();
 const route = useRoute();
+const onboardingStore = useOnboardingStore();
 
 const formData = reactive({
     title: "",
@@ -72,11 +73,21 @@ const titleErrors = computed(() => {
 });
 const handleTitleInput = function () {
     v$.value.formData.title.$touch();
+
+    if (!onboardingStore.isActive()) return;
+
+    if (isTitleValid.value) {
+        onboardingStore.debouncedEnableNextButton();
+    } else {
+        onboardingStore.debouncedDisableNextButton();
+    }
 };
 
 const loadingState = ref("pending");
 
 onMounted(async () => {
+    onboardingStore.moveToEighthStep();
+
     if (props.id) {
         loadingState.value = "loading";
         const inventoryPrice = await inventoryPricesStore.getOne(props.id);
@@ -86,6 +97,14 @@ onMounted(async () => {
         formData.title = inventoryPrice.title;
         prices.value = inventoryPrice.values;
     }
+
+    eventBus.addEventListener("onboarding-check", async () => {
+        const isValid = await v$.value.$validate();
+
+        if (isValid) {
+            onboardingStore.moveNext();
+        }
+    });
 
     eventBus.addEventListener("ready", async () => {
         const isValid = await v$.value.$validate();
@@ -132,7 +151,7 @@ onBeforeRouteLeave(() => {
 
 <template>
     <div>
-        <BaseFormGroup :is-error="!isTitleValid">
+        <BaseFormGroup :is-error="!isTitleValid" class="inventory-price-title">
             <template #label> Название тарифа * </template>
             <template #content>
                 <BaseInput
@@ -147,22 +166,24 @@ onBeforeRouteLeave(() => {
             </template>
         </BaseFormGroup>
         <hr />
-        <h3>Расценки</h3>
-        <template v-for="price in prices" :key="price.id ?? price.key">
-            <InventoryPriceValueEditor
-                v-model:period="price.period"
-                v-model:more-then="price.moreThen"
-                v-model:price="price.price"
-                @delete="deletePrice(price)"
-            />
-            <hr />
-        </template>
-        <button class="add-value-btn" @click="addPrice">
-            <span class="add-value-icon">
-                <IconPlus />
-            </span>
-            <span class="add-value-text">Добавить расценку</span>
-        </button>
+        <div id="inventory-price-values">
+            <h3>Расценки</h3>
+            <template v-for="price in prices" :key="price.id ?? price.key">
+                <InventoryPriceValueEditor
+                    v-model:period="price.period"
+                    v-model:more-then="price.moreThen"
+                    v-model:price="price.price"
+                    @delete="deletePrice(price)"
+                />
+                <hr />
+            </template>
+            <button class="add-value-btn" @click="addPrice">
+                <span class="add-value-icon">
+                    <IconPlus />
+                </span>
+                <span class="add-value-text">Добавить расценку</span>
+            </button>
+        </div>
     </div>
     <BaseLoadingModal :state="loadingState" />
     <BaseNotification v-model="isNotificationShown" type="error" />

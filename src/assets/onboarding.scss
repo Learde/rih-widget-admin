@@ -1,7 +1,7 @@
 .onboarding-popover {
     min-width: 300px;
     max-width: 350px;
-    padding: 24px 16px 16px;
+    padding: 34px 16px 16px;
     border-radius: 18px;
 
     & .driver-popover-title {
@@ -23,10 +23,14 @@
     & .driver-popover-description {
         font-size: 15px;
         line-height: 20px;
+
+        & b {
+            font-weight: 600;
+        }
     }
 
     & .driver-popover-footer {
-        margin-top: 32px;
+        margin-top: 24px;
 
         & .driver-popover-navigation-btns {
             display: flex;

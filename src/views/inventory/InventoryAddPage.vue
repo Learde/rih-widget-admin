@@ -28,6 +28,11 @@ const inventoryForm = useInventoryFormStore();
 const route = useRoute();
 const onboardingStore = useOnboardingStore();
 
+const handlePriceOpened = function () {
+    onboardingStore.moveToSeventhStep();
+    onboardingStore.moveToThirteenthStep();
+};
+
 onMounted(() => {
     if (!route.query.noReset) {
         inventoryForm.$reset();
@@ -102,7 +107,9 @@ onMounted(() => {
         <SelectInventoryPrice
             class="inventory-price-select"
             v-model="inventoryForm.formData.price"
-            @opened="onboardingStore.moveToSeventhStep"
+            @opened="handlePriceOpened"
+            @fetched="onboardingStore.refresh"
+            @selected="onboardingStore.moveToFourteenthStep"
             :is-error="!inventoryForm.isPriceValid"
         >
             <template #error-text>
@@ -110,8 +117,8 @@ onMounted(() => {
             </template>
         </SelectInventoryPrice>
         <SelectPoint v-model="inventoryForm.formData.point" />
-        <BaseImageSelect v-model="inventoryForm.formData.media" />
-        <BaseButton @click="inventoryForm.save">Сохранить</BaseButton>
+        <BaseImageSelect id="inventory-image-select" v-model="inventoryForm.formData.media" />
+        <BaseButton id="save-inventory" @click="inventoryForm.save">Сохранить</BaseButton>
     </div>
     <BaseLoadingModal :state="inventoryForm.state" />
     <BaseNotification v-model="inventoryForm.isNotificationShown" type="error" />

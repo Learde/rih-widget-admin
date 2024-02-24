@@ -1,4 +1,6 @@
 <script setup>
+import { nextTick } from "vue";
+
 import { BaseSelectMenu } from "@/components";
 import { IconPrice } from "@/icones";
 import { useInventoryPricesStore } from "@/stores";
@@ -19,18 +21,22 @@ defineProps({
         default: "AddInventory",
     },
 });
-const emit = defineEmits(["update:modelValue", "opened"]);
+const emit = defineEmits(["update:modelValue", "opened", "fetched", "selected"]);
 
 const inventoryPricesStore = useInventoryPricesStore();
 
-const reload = function () {
+const reload = async function () {
     if (inventoryPricesStore.hasUnloadedOptions) {
-        inventoryPricesStore.fetchMany({ perPage: 999, page: 1, search: "" });
+        await inventoryPricesStore.fetchMany({ perPage: 999, page: 1, search: "" });
+
+        await nextTick();
+        emit("fetched");
     }
 };
 
 const handleClick = function (e, close) {
     emit("update:modelValue", e);
+    emit("selected", e);
     close();
 };
 </script>

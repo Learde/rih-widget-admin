@@ -1,3 +1,5 @@
+import { onMounted } from "vue";
+
 import { useOnboardingStore } from "@/stores";
 
 export const useHomeOnboarding = function () {
@@ -5,5 +7,11 @@ export const useHomeOnboarding = function () {
 
     const onboardingStore = useOnboardingStore();
 
-    onboardingStore.start();
+    onMounted(() => {
+        if (onboardingStore.isActive()) {
+            onboardingStore.moveNext();
+        } else {
+            onboardingStore.start();
+        }
+    });
 };

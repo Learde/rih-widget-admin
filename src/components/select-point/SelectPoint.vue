@@ -1,4 +1,6 @@
 <script setup>
+import { nextTick } from "vue";
+
 import { BaseSelectMenu } from "@/components";
 import { IconLocation } from "@/icones";
 import { usePointsStore } from "@/stores";
@@ -19,13 +21,16 @@ defineProps({
         default: "AddInventory",
     },
 });
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "fetched"]);
 
 const pointsStore = usePointsStore();
 
-const reload = function () {
+const reload = async function () {
     if (pointsStore.hasUnloadedOptions) {
-        pointsStore.fetchMany({ perPage: 999, page: 1, search: "" });
+        await pointsStore.fetchMany({ perPage: 999, page: 1, search: "" });
+
+        await nextTick();
+        emit("fetched");
     }
 };
 
