@@ -1,4 +1,6 @@
+import bridge from "@vkontakte/vk-bridge";
 import { createRouter, createWebHistory } from "vue-router";
+
 import { hasToken } from "@/api";
 
 const router = createRouter({
@@ -168,7 +170,7 @@ const router = createRouter({
 
 const onboardingRoutes = ["Onboarding", "OnboardingStep1", "OnboardingStep2", "OnboardingStep3"];
 
-router.beforeEach((to) => {
+router.beforeEach((to, from) => {
     const isOnboardingRoute = onboardingRoutes.includes(to.name);
 
     if (!hasToken() && !isOnboardingRoute) {
@@ -177,6 +179,22 @@ router.beforeEach((to) => {
 
     if (hasToken() && isOnboardingRoute) {
         return { name: "Home" };
+    }
+
+    if (to.query?.vk_app_id && from.fullPath === "/") {
+        return { path: to.hash.replace("#", "") || "/", replace: true };
+    }
+});
+
+router.afterEach((to) => {
+    bridge.send("VKWebAppSetLocation", {
+        location: to.fullPath,
+        replace_state: true,
+    });
+});
+bridge.subscribe((event) => {
+    if (event.detail.type === "VKWebAppChangeFragment") {
+        router.replace(event.detail.data.location);
     }
 });
 

@@ -1,5 +1,4 @@
 <script setup>
-import bridge from "@vkontakte/vk-bridge";
 import { computed, onMounted } from "vue";
 import { RouterView, useRoute } from "vue-router";
 
@@ -15,7 +14,6 @@ const hasHeader = computed(() => {
 });
 
 onMounted(() => {
-    bridge.send("VKWebAppInit");
     userStore.setIsAuthenticated(hasToken());
 });
 </script>
