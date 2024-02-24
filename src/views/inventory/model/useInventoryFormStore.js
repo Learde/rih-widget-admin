@@ -5,7 +5,7 @@ import { defineStore } from "pinia";
 import { computed, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 
-import { useInventoriesStore } from "@/stores";
+import { useInventoriesStore, useOnboardingStore } from "@/stores";
 
 const INVENTORY_FORM_TEMPLATE = {
     title: "",
@@ -21,6 +21,7 @@ const INVENTORY_FORM_TEMPLATE = {
 
 export const useInventoryFormStore = defineStore("inventoryForm", () => {
     const inventoriesStore = useInventoriesStore();
+    const onboardingStore = useOnboardingStore();
     const router = useRouter();
 
     let formData = reactive(clone(INVENTORY_FORM_TEMPLATE));
@@ -101,6 +102,14 @@ export const useInventoryFormStore = defineStore("inventoryForm", () => {
 
     const handleTitleInput = function () {
         v$.value.formData.title.$touch();
+
+        if (!onboardingStore.isActive()) return;
+
+        if (isTitleValid.value) {
+            onboardingStore.debouncedEnableNextButton();
+        } else {
+            onboardingStore.debouncedDisableNextButton();
+        }
     };
 
     const fillFormData = async function (inventoryId) {

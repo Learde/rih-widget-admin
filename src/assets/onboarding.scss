@@ -1,6 +1,6 @@
 .onboarding-popover {
     min-width: 300px;
-    max-width: 400px;
+    max-width: 350px;
     padding: 24px 16px 16px;
     border-radius: 18px;
 
@@ -10,6 +10,14 @@
         font-weight: 600;
         line-height: 25px;
         text-align: center;
+
+        & .onboarding-img {
+            display: block;
+            width: 150px;
+            height: auto;
+            margin: 0 auto;
+            margin-bottom: 8px;
+        }
     }
 
     & .driver-popover-description {
@@ -42,6 +50,11 @@
             &.skip-btn {
                 color: var(--c-primary);
                 background-color: var(--c-gray-6);
+            }
+
+            &[disabled] {
+                cursor: not-allowed;
+                opacity: 0.5;
             }
         }
     }

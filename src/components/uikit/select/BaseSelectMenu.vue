@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, nextTick } from "vue";
 
 import { TheHeader, BaseFormGroup } from "@/components";
 import { IconChevron } from "@/icones";
@@ -22,14 +22,18 @@ defineProps({
         default: null,
     },
 });
-const emit = defineEmits(["open", "close"]);
+const emit = defineEmits(["open", "opened", "close"]);
 
 const shouldShowModal = ref(false);
 
-const showModal = function () {
+const showModal = async function () {
     shouldShowModal.value = true;
     document.body.style.overflow = "hidden";
     emit("open");
+
+    await nextTick();
+
+    emit("opened");
 };
 
 const closeModal = function () {
@@ -40,7 +44,7 @@ const closeModal = function () {
 </script>
 
 <template>
-    <BaseFormGroup :is-error="isError">
+    <BaseFormGroup :is-error="isError" v-bind="$attrs">
         <template #label>
             <slot name="label"></slot>
         </template>

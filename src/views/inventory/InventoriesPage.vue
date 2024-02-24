@@ -1,11 +1,11 @@
 <script setup>
 import { refDebounced } from "@vueuse/core";
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref, watchEffect, onMounted } from "vue";
 import { RouterLink, useRouter } from "vue-router";
 
 import { BaseDeleteModal, BasePaginate, BaseSearchInput, InventoryCard } from "@/components";
 import { IconInventory, IconSearch } from "@/icones";
-import { useInventoriesStore } from "@/stores";
+import { useInventoriesStore, useOnboardingStore } from "@/stores";
 
 const perPage = ref(12);
 const currentPage = ref(1);
@@ -60,6 +60,12 @@ const deleteInventory = async function () {
     await inventoriesStore.deleteOne(deletingId.value);
     reload();
 };
+
+const onboardingStore = useOnboardingStore();
+
+onMounted(() => {
+    onboardingStore.moveNext();
+});
 </script>
 
 <template>

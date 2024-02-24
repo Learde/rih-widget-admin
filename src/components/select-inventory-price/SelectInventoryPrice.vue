@@ -15,7 +15,7 @@ defineProps({
         default: null,
     },
 });
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "opened"]);
 
 const inventoryPricesStore = useInventoryPricesStore();
 
@@ -37,6 +37,7 @@ const handleClick = function (e, close) {
         :is-error="isError"
         :value="modelValue?.title"
         @open="reload"
+        @opened="emit('opened')"
     >
         <template #label> Тариф * </template>
         <template #modal-content="{ closeModal }">

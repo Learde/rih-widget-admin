@@ -1,4 +1,6 @@
 <script setup>
+import { nextTick } from "vue";
+
 import { BaseSelectMenu } from "@/components";
 import { useInventoryStatesStore } from "@/stores";
 
@@ -15,18 +17,22 @@ defineProps({
         default: null,
     },
 });
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "opened", "fetched", "selected"]);
 
 const inventoryStatesStore = useInventoryStatesStore();
 
-const reload = function () {
+const reload = async function () {
     if (inventoryStatesStore.hasUnloadedOptions) {
-        inventoryStatesStore.fetchMany({ perPage: 999, page: 1, search: "" });
+        await inventoryStatesStore.fetchMany({ perPage: 999, page: 1, search: "" });
+
+        await nextTick();
+        emit("fetched");
     }
 };
 
 const handleClick = function (e, close) {
     emit("update:modelValue", e);
+    emit("selected");
     close();
 };
 </script>
@@ -37,6 +43,7 @@ const handleClick = function (e, close) {
         :is-error="isError"
         :value="modelValue?.title"
         @open="reload"
+        @opened="emit('opened')"
     >
         <template #label> Статус * </template>
         <template #modal-content="{ closeModal }">

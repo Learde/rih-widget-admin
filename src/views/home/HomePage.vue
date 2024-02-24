@@ -10,11 +10,10 @@ import {
     IconSettings,
     IconLocation,
 } from "@/icones";
-import { useOnboardingStore } from "@/stores";
 
-const onboardingStore = useOnboardingStore();
+import { useHomeOnboarding } from "./lib/useHomeOnboarding.js";
 
-onboardingStore.start();
+useHomeOnboarding();
 </script>
 
 <template>

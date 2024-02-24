@@ -15,7 +15,7 @@ import {
     SelectInventoryPrice,
     SelectPoint,
 } from "@/components";
-import { useTrans } from "@/stores";
+import { useOnboardingStore, useTrans } from "@/stores";
 
 import { useInventoryFormStore } from "./model/useInventoryFormStore.js";
 
@@ -26,6 +26,7 @@ const props = defineProps({
 const trans = useTrans();
 const inventoryForm = useInventoryFormStore();
 const route = useRoute();
+const onboardingStore = useOnboardingStore();
 
 onMounted(() => {
     if (!route.query.noReset) {
@@ -35,51 +36,62 @@ onMounted(() => {
             inventoryForm.fillFormData(props.id);
         }
     }
+
+    onboardingStore.moveNext();
 });
 </script>
 
 <template>
     <div class="wrapper">
-        <BaseFormGroup :is-error="!inventoryForm.isTitleValid">
-            <template #label> Название инвентаря * </template>
-            <template #content>
-                <BaseInput
-                    placeholder="Введите название"
-                    :is-error="!inventoryForm.isTitleValid"
-                    v-model="inventoryForm.formData.title"
-                    @input="inventoryForm.handleTitleInput"
-                />
-            </template>
-            <template #error-text>
-                {{ trans.validationMessages[inventoryForm.titleErrors?.at(0)?.$validator] }}
-            </template>
-        </BaseFormGroup>
-        <BaseFormGroup>
-            <template #label> Артикул </template>
-            <template #content>
-                <BaseInput placeholder="Введите артикул" v-model="inventoryForm.formData.article" />
-            </template>
-        </BaseFormGroup>
-        <BaseFormGroup>
-            <template #label> Инвентарный номер </template>
-            <template #content>
-                <BaseInput
-                    placeholder="Введите номер"
-                    v-model="inventoryForm.formData.inventoryNumber"
-                />
-            </template>
-        </BaseFormGroup>
-        <BaseFormGroup>
-            <template #label> Описание </template>
-            <template #content>
-                <BaseTextarea
-                    placeholder="Введите описание"
-                    v-model="inventoryForm.formData.description"
-                />
-            </template>
-        </BaseFormGroup>
+        <div class="wrapper main-fields">
+            <BaseFormGroup :is-error="!inventoryForm.isTitleValid">
+                <template #label> Название инвентаря * </template>
+                <template #content>
+                    <BaseInput
+                        placeholder="Введите название"
+                        :is-error="!inventoryForm.isTitleValid"
+                        v-model="inventoryForm.formData.title"
+                        @input="inventoryForm.handleTitleInput"
+                    />
+                </template>
+                <template #error-text>
+                    {{ trans.validationMessages[inventoryForm.titleErrors?.at(0)?.$validator] }}
+                </template>
+            </BaseFormGroup>
+            <BaseFormGroup>
+                <template #label> Артикул </template>
+                <template #content>
+                    <BaseInput
+                        placeholder="Введите артикул"
+                        v-model="inventoryForm.formData.article"
+                    />
+                </template>
+            </BaseFormGroup>
+            <BaseFormGroup>
+                <template #label> Инвентарный номер </template>
+                <template #content>
+                    <BaseInput
+                        placeholder="Введите номер"
+                        v-model="inventoryForm.formData.inventoryNumber"
+                    />
+                </template>
+            </BaseFormGroup>
+            <BaseFormGroup>
+                <template #label> Описание </template>
+                <template #content>
+                    <BaseTextarea
+                        placeholder="Введите описание"
+                        v-model="inventoryForm.formData.description"
+                    />
+                </template>
+            </BaseFormGroup>
+        </div>
         <SelectInventoryState
+            class="inventory-state-select"
             v-model="inventoryForm.formData.state"
+            @opened="onboardingStore.moveToFifthStep"
+            @fetched="onboardingStore.refresh"
+            @selected="onboardingStore.moveToSixthStep"
             :is-error="!inventoryForm.isStateValid"
         >
             <template #error-text>
@@ -88,7 +100,9 @@ onMounted(() => {
         </SelectInventoryState>
         <SelectCategory v-model="inventoryForm.formData.category" />
         <SelectInventoryPrice
+            class="inventory-price-select"
             v-model="inventoryForm.formData.price"
+            @opened="onboardingStore.moveToSeventhStep"
             :is-error="!inventoryForm.isPriceValid"
         >
             <template #error-text>

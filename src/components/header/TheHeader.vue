@@ -55,7 +55,7 @@ const handleReady = function () {
         </h2>
         <IconPlus
             v-if="Boolean(addRouteName)"
-            class="plus"
+            class="plus add-entity"
             @click="router.push({ name: addRouteName })"
         />
         <span v-if="hasReadyButton" class="ready-button" @click="handleReady"> Готово </span>
