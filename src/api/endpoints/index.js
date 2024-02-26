@@ -1,3 +1,4 @@
+export { apiAuth } from "./auth";
 export { apiCategory } from "./category";
 export { apiInventory } from "./inventory";
 export { apiInventoryPrice } from "./inventory-price";

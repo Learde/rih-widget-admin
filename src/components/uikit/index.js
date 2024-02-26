@@ -9,6 +9,7 @@ export { default as BaseToggler } from "./toggler/BaseToggler.vue";
 
 export { default as BaseDeleteModal } from "./modal/BaseDeleteModal.vue";
 export { default as BaseLoadingModal } from "./modal/BaseLoadingModal.vue";
+export { default as BaseErrorModal } from "./modal/BaseErrorModal.vue";
 
 export { default as BaseNotification } from "./notification/BaseNotification.vue";
 

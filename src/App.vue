@@ -3,7 +3,7 @@ import { computed, onMounted } from "vue";
 import { RouterView, useRoute } from "vue-router";
 
 import { hasToken } from "@/api";
-import { TheHeader } from "@/components";
+import { TheHeader, BaseErrorModal, BaseButton } from "@/components";
 import { useUserStore } from "@/stores";
 
 const route = useRoute();
@@ -13,8 +13,14 @@ const hasHeader = computed(() => {
     return Boolean(route.meta?.title);
 });
 
-onMounted(() => {
+onMounted(async () => {
     userStore.setIsAuthenticated(hasToken());
+
+    await userStore.initLaunchParams();
+
+    await userStore.requestEmail();
+
+    await userStore.tryAuth();
 });
 </script>
 
@@ -29,4 +35,28 @@ onMounted(() => {
         />
         <RouterView />
     </div>
+    <BaseErrorModal v-model="userStore.isEmailDenied">
+        <template #content>
+            <div style="margin-bottom: 12px">
+                Без доступа к адресу электронной почты мы не сможем вас идентифицировать в нашей
+                системе
+            </div>
+            <BaseButton @click="userStore.requestEmail">Запросить email повторно</BaseButton>
+        </template>
+    </BaseErrorModal>
+    <BaseErrorModal v-model="userStore.isPhoneDenied">
+        <template #content>
+            <div style="margin-bottom: 12px">
+                Без доступа к номеру телефона мы не сможем вас зарегистрировать в нашей системе
+            </div>
+            <BaseButton @click="userStore.register">Запросить телефон повторно</BaseButton>
+        </template>
+    </BaseErrorModal>
+    <BaseErrorModal v-model="userStore.isGetLaunchParamsFailed">
+        <template #content>
+            <div style="margin-bottom: 12px">
+                Что-то пошло не так, попробуйте перезапустить приложение
+            </div>
+        </template>
+    </BaseErrorModal>
 </template>
